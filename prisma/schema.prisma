@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id          String         @id @default(uuid())
+  projectType ProjectType    @default(RP)
+  title       String
+  info        String
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime?       @updatedAt
+  Section10kV Section10kV[]
+  fixation    Fixation10kV[]
+  cells10kV   Cell10kV[]
+}
+
+enum ProjectType {
+  RP
+  TP
+  KTP
+}
+
+model Section10kV {
+  id        String         @id @default(uuid())
+  projectId String
+  Project   Project        @relation(fields: [projectId], references: [id])
+  voltage   Int
+  position  Json
+  draggable Boolean        @default(true)
+  fixations Fixation10kV[]
+}
+
+model Fixation10kV {
+  id            String      @id @default(uuid())
+  projectId     String
+  Project       Project     @relation(fields: [projectId], references: [id])
+  section10kVId String
+  Section10kV   Section10kV @relation(fields: [section10kVId], references: [id])
+  position      Json
+  cells10kV     Cell10kV[]
+}
+
+model Cell10kV {
+  id                                 String        @id @default(uuid())
+  projectId                          String
+  Project                            Project       @relation(fields: [projectId], references: [id])
+  Fixation10kV                       Fixation10kV? @relation(fields: [fixation10kVId], references: [id])
+  fixation10kVId                     String?
+  position                           Json
+  draggable                          Boolean       @default(true)
+  typeOfCell                         String?
+  typeOfSwithcingDevice              String?
+  swithcingDeviceR                   Json?
+  swithcingDeviceVV                  Json?
+  swithcingDeviceVN                  Json?
+  tt                                 Json?
+  mircoproc                          Json?
+  tn                                 Json?
+  tsn                                Json?
+  opn                                Json?
+  ratedCurrentOfTheMainCircuits_10kV Int
+}
