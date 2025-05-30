@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { CreateGetDictionaryDatumDto } from "./dto/create-get-dictionary-datum.dto";
 import { UpdateGetDictionaryDatumDto } from "./dto/update-get-dictionary-datum.dto";
-import { getRowData, getTableData } from "src/lib/getDataFromExcel";
+import { getRowData, getTableData } from "src/shared/lib/getDataFromExcel";
 import {
   DictionaryFolders,
   FileNameFor1Column04Kv,

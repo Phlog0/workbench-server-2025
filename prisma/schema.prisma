@@ -19,7 +19,7 @@ model Project {
   title       String
   info        String
   createdAt   DateTime       @default(now())
-  updatedAt   DateTime?       @updatedAt
+  updatedAt   DateTime?      @updatedAt
   Section10kV Section10kV[]
   fixation    Fixation10kV[]
   cells10kV   Cell10kV[]
@@ -70,4 +70,12 @@ model Cell10kV {
   tsn                                Json?
   opn                                Json?
   ratedCurrentOfTheMainCircuits_10kV Int
+}
+
+model User {
+  id         Int    @id @default(autoincrement())
+  firstName  String
+  secondName String
+  password   String
+  email      String @unique
 }
