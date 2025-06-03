@@ -14,10 +14,10 @@ datasource db {
 }
 
 model Project {
-  id          String         @id @default(uuid())
+  id          Int            @id @default(autoincrement())
   projectType ProjectType    @default(RP)
   title       String
-  info        String
+  description String
   createdAt   DateTime       @default(now())
   updatedAt   DateTime?      @updatedAt
   Section10kV Section10kV[]
@@ -33,7 +33,7 @@ enum ProjectType {
 
 model Section10kV {
   id        String         @id @default(uuid())
-  projectId String
+  projectId Int
   Project   Project        @relation(fields: [projectId], references: [id])
   voltage   Int
   position  Json
@@ -43,7 +43,7 @@ model Section10kV {
 
 model Fixation10kV {
   id            String      @id @default(uuid())
-  projectId     String
+  projectId     Int
   Project       Project     @relation(fields: [projectId], references: [id])
   section10kVId String
   Section10kV   Section10kV @relation(fields: [section10kVId], references: [id])
@@ -53,7 +53,7 @@ model Fixation10kV {
 
 model Cell10kV {
   id                                 String        @id @default(uuid())
-  projectId                          String
+  projectId                          Int
   Project                            Project       @relation(fields: [projectId], references: [id])
   Fixation10kV                       Fixation10kV? @relation(fields: [fixation10kVId], references: [id])
   fixation10kVId                     String?
