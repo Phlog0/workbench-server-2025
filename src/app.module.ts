@@ -6,9 +6,10 @@ import { GetDictionaryDataModule } from "./get-dictionary-data/get-dictionary-da
 import { AuthModule } from "./auth/auth.module";
 import { APP_GUARD } from "@nestjs/core";
 import { AuthGuard } from "./auth/auth.guard";
+import { SavePdfModule } from "./save-pdf/save-pdf.module";
 
 @Module({
-  imports: [ProjectsModule, GetDictionaryDataModule, AuthModule],
+  imports: [ProjectsModule, GetDictionaryDataModule, AuthModule, SavePdfModule],
   controllers: [AppController],
   providers: [
     AppService,

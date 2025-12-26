@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { PrismaService } from "src/prisma.service";
-import { User as UserModel, Prisma } from "@prisma/client";
+import { User as UserModel } from "@prisma/client";
 import * as bcrypt from "bcryptjs";
 type CreateUserArgs = { email: string; firstName: string; password: string; secondName: string };
 @Injectable()

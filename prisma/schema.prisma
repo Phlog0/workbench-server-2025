@@ -14,68 +14,33 @@ datasource db {
 }
 
 model Project {
-  id          Int            @id @default(autoincrement())
-  projectType ProjectType    @default(RP)
-  title       String
-  description String
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime?      @updatedAt
-  Section10kV Section10kV[]
-  fixation    Fixation10kV[]
-  cells10kV   Cell10kV[]
+  id            String      @id @default(uuid())
+  projectType   ProjectType @default(КТП)
+  title         String
+  description   String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime?   @updatedAt
+  projectScheme Json?
 }
 
 enum ProjectType {
-  RP
-  TP
-  KTP
-}
-
-model Section10kV {
-  id        String         @id @default(uuid())
-  projectId Int
-  Project   Project        @relation(fields: [projectId], references: [id])
-  voltage   Int
-  position  Json
-  draggable Boolean        @default(true)
-  fixations Fixation10kV[]
-}
-
-model Fixation10kV {
-  id            String      @id @default(uuid())
-  projectId     Int
-  Project       Project     @relation(fields: [projectId], references: [id])
-  section10kVId String
-  Section10kV   Section10kV @relation(fields: [section10kVId], references: [id])
-  position      Json
-  cells10kV     Cell10kV[]
-}
-
-model Cell10kV {
-  id                                 String        @id @default(uuid())
-  projectId                          Int
-  Project                            Project       @relation(fields: [projectId], references: [id])
-  Fixation10kV                       Fixation10kV? @relation(fields: [fixation10kVId], references: [id])
-  fixation10kVId                     String?
-  position                           Json
-  draggable                          Boolean       @default(true)
-  typeOfCell                         String?
-  typeOfSwithcingDevice              String?
-  swithcingDeviceR                   Json?
-  swithcingDeviceVV                  Json?
-  swithcingDeviceVN                  Json?
-  tt                                 Json?
-  mircoproc                          Json?
-  tn                                 Json?
-  tsn                                Json?
-  opn                                Json?
-  ratedCurrentOfTheMainCircuits_10kV Int
+  ТП
+  КТП
+  РП
 }
 
 model User {
-  id         Int    @id @default(autoincrement())
-  firstName  String
-  secondName String
-  password   String
-  email      String @unique
+  id           Int           @id @default(autoincrement())
+  firstName    String
+  secondName   String
+  password     String
+  email        String        @unique
+  refreshToken RefreshToken?
+}
+
+model RefreshToken {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int    @unique
+  token  String @unique
 }

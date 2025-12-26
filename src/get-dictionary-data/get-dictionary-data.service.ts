@@ -1,57 +1,45 @@
 import { Injectable } from "@nestjs/common";
-import { CreateGetDictionaryDatumDto } from "./dto/create-get-dictionary-datum.dto";
-import { UpdateGetDictionaryDatumDto } from "./dto/update-get-dictionary-datum.dto";
-import { getRowData, getTableData } from "src/shared/lib/getDataFromExcel";
-import {
-  DictionaryFolders,
-  FileNameFor1Column04Kv,
-  FileNameFor1Column10Kv,
-  FileNameForMultipleColumns10Kv,
-} from "src/shared/types";
+
+import { getListData, getTableData } from "src/shared/lib/get-excel-data/get-data-from-excel";
+
 import { QueryParametersGetDictionary } from "./dto/query-parameters-get-dictionary";
+import { RFNodeTypesValues } from "src/shared/rf-nodes-types";
+import { PossibleFilename } from "src/@types";
+import { isFileNameList } from "src/shared/lib/get-excel-data/types/type-guards";
 
 @Injectable()
 export class GetDictionaryDataService {
   getDictionaryData(
-    typeFolder: DictionaryFolders,
-    fileName: FileNameForMultipleColumns10Kv | FileNameFor1Column10Kv | FileNameFor1Column04Kv,
+    typeFolder: RFNodeTypesValues,
+    fileName: PossibleFilename,
     queryParams: QueryParametersGetDictionary,
   ) {
-    if (
-      fileName === "typeOfCell" ||
-      fileName === "typeOfSwitchingDevice"
-
-      // ? || ["typeOfCell", "typeOfSwitchingDevice"].includes(fileName)
-    ) {
-      const res = getRowData(typeFolder, fileName);
-
-      //TODO
-      return res;
+    if (isFileNameList(fileName)) {
+      return getListData(typeFolder, fileName);
     } else {
       const res = getTableData(typeFolder, fileName);
       if (res !== null) {
-        const tableHeaders = res.shift();
+        const tableColumns = res.shift();
         if (
-          queryParams &&
-          "measuringCurrentTransformersDeviceAccuracyClass" in queryParams &&
+          (queryParams || "measuringCurrentTransformersDeviceAccuracyClass" in queryParams) &&
           fileName === "measuringCurrentTransformersDevice"
         ) {
           const { measuringCurrentTransformersDeviceAccuracyClass } = queryParams;
 
           const regexPattern = new RegExp(
-            new Array(measuringCurrentTransformersDeviceAccuracyClass).fill(".+").join("\\/"),
+            new Array(+measuringCurrentTransformersDeviceAccuracyClass || 0).fill(".+").join("\\/"),
           );
           //*
           //* 1:/.+/
           //* 4:/.+\/.+\/.+\/.+/
-          const filtered = res.filter((item) =>
+          const filteredTableBody = res.filter((item) =>
             (item["accuracyClass"] as string).match(regexPattern),
           );
 
-          return { tableHeaders, body: filtered };
+          return { tableColumns: tableColumns, tableBody: filteredTableBody };
         }
 
-        return { tableHeaders, body: res };
+        return { tableColumns: tableColumns, tableBody: res };
       }
     }
   }

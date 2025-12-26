@@ -1,6 +1,5 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { BadRequestException, HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { CreateProjectDto } from "./dto/create-project.dto";
-import { UpdateProjectDto } from "./dto/update-project.dto";
 import { PrismaService } from "../prisma.service";
 @Injectable()
 export class ProjectsService {
@@ -12,15 +11,15 @@ export class ProjectsService {
         ...createProjectDto,
       },
     });
-    return newProject;
+    return { message: "Проект успешно создан", newProject: newProject };
   }
 
   async findAllProjects() {
-    const projects = await this.prisma.project.findMany();
+    const projects = await this.prisma.project.findMany({ orderBy: { updatedAt: "desc" } });
     return projects;
   }
 
-  async findProject(id: string) {
+  async findProjectInfo(id: string) {
     const project = await this.prisma.project.findUnique({
       where: {
         id,
@@ -30,43 +29,65 @@ export class ProjectsService {
     //    return {
     //   message: "Такого проекта не существует"
     // }
-    const sections10kV = await this.prisma.section10kV.findMany({
-      where: {
-        projectId: id,
-      },
-    });
-    const sections10kVIds = sections10kV.map((s) => s.id);
-    const fixations = await this.prisma.fixation10kV.findMany({
-      where: {
-        projectId: id,
-        section10kVId: { in: sections10kVIds },
-      },
-    });
 
-    const fixationsIds = fixations.map((f) => f.id);
-    const cells10kV = await this.prisma.cell10kV.findMany({
-      where: {
-        projectId: id,
-        fixation10kVId: { in: fixationsIds },
-      },
-    });
-    return { project, sections10kV, fixations, cells10kV };
+    return { project };
   }
-
-  // findOne(id: number) {
-  //   return `This action returns a #${id} project`;
-  // }
-
-  // update(id: number, updateProjectDto: UpdateProjectDto) {
-  //   return `This action updates a #${id} project`;
-  // }
-
-  async removeProject(id: string) {
-    const deletedProject = await this.prisma.project.delete({
+  async findProjectScheme(id: string) {
+    const project = await this.prisma.project.findUnique({
       where: {
         id,
       },
+      select: {
+        projectScheme: true,
+      },
     });
-    return deletedProject;
+    if (project === null) throw new HttpException("Проект не найден", HttpStatus.NOT_FOUND);
+
+    return project;
+  }
+
+  // findOne(id: string) {
+  //   return `This action returns a #${id} project`;
+  // }
+
+  async updateProject(id: string, updateProjectDto: CreateProjectDto) {
+    try {
+      const updatedProject = await this.prisma.project.update({
+        where: {
+          id,
+        },
+        data: updateProjectDto,
+      });
+      return { message: `Данные проекта ${id} успешно обновлены` };
+    } catch (error) {
+      if (error instanceof Error) throw new BadRequestException(error.message);
+    }
+  }
+
+  async updateProjectScheme(id: string, updateProjectDto: any) {
+    try {
+      const updatedProject = await this.prisma.project.update({
+        where: {
+          id,
+        },
+        data: { projectScheme: updateProjectDto },
+      });
+      return { message: `Данные проекта ${id} успешно обновлены` };
+    } catch (error) {
+      if (error instanceof Error) throw new BadRequestException(error.message);
+    }
+  }
+
+  async removeProject(id: string) {
+    try {
+      const deletedProject = await this.prisma.project.delete({
+        where: {
+          id,
+        },
+      });
+      return { message: `Данные проекта ${id} успешно удалены` };
+    } catch (error) {
+      if (error instanceof Error) throw new BadRequestException(error.message);
+    }
   }
 }

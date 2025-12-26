@@ -29,9 +29,11 @@ export class AuthGuard implements CanActivate {
     const token = this.extractTokenFromHeader(request);
     if (!token) throw new UnauthorizedException();
     try {
+      //расшифровываем токен с клиента. payload: src\auth\auth.service.ts signIn()
       const payload = await this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_SECRET_TOKEN,
       });
+      //необязательно вообще, глваное return true в конце
       request["user"] = payload;
     } catch {
       throw new UnauthorizedException();

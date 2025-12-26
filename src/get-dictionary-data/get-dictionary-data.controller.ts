@@ -1,26 +1,11 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  HttpException,
-  HttpStatus,
-  ParseIntPipe,
-  Query,
-} from "@nestjs/common";
+import { Controller, Get, Param, HttpException, HttpStatus, Query } from "@nestjs/common";
 import { GetDictionaryDataService } from "./get-dictionary-data.service";
-import { CreateGetDictionaryDatumDto } from "./dto/create-get-dictionary-datum.dto";
-import { UpdateGetDictionaryDatumDto } from "./dto/update-get-dictionary-datum.dto";
-import {
-  DictionaryFolders,
-  FileNameFor1Column10Kv,
-  FileNameForMultipleColumns10Kv,
-} from "src/shared/types";
-import { QueryParametersGetDictionary } from "./dto/query-parameters-get-dictionary";
 
+import { QueryParametersGetDictionary } from "./dto/query-parameters-get-dictionary";
+import { SkipAuth } from "src/auth/decorators/skip-auth.decorator";
+import { RFNodeTypesValues } from "src/shared/rf-nodes-types";
+import { PossibleFilename } from "src/@types";
+@SkipAuth()
 @Controller("api")
 // @Controller("api/get-dictionary-data")
 export class GetDictionaryDataController {
@@ -28,48 +13,26 @@ export class GetDictionaryDataController {
 
   @Get(":typeFolder/:fileName")
   getDictionaryData(
-    @Param("typeFolder") typeFolder: DictionaryFolders,
-    @Param("fileName") fileName: FileNameFor1Column10Kv | FileNameForMultipleColumns10Kv,
+    @Param("typeFolder") typeFolder: RFNodeTypesValues,
+    @Param("fileName") fileName: PossibleFilename,
     @Query() queryParams: QueryParametersGetDictionary,
   ) {
     try {
-      const res = this.getDictionaryDataService.getDictionaryData(
+      const dictionaryData = this.getDictionaryDataService.getDictionaryData(
         typeFolder,
         fileName,
         queryParams,
       );
-      return res;
+      return { data: dictionaryData };
     } catch (error) {
       throw new HttpException(
         {
-          status: HttpStatus.NOT_FOUND,
-          error: "Файл не найден",
+          status: HttpStatus.BAD_REQUEST,
+          error: "Invalid request",
+          details: error.message,
         },
-        HttpStatus.NOT_FOUND,
-        {
-          cause: error,
-        },
+        HttpStatus.BAD_REQUEST,
       );
     }
   }
-  //   @Get(":fileName/:count")
-  //   getDataWithParams(
-  //     @Param("fileName") id: FileNameFor1Column10Kv | FileNameForMultipleColumns10Kv,
-  //     @Param("count", ParseIntPipe) count: number,
-  //   ) {
-  //     try {
-  //       return this.getDictionaryDataService.getDictionaryData(id, count);
-  //     } catch (error) {
-  //       throw new HttpException(
-  //         {
-  //           status: HttpStatus.NOT_FOUND,
-  //           error: "Файл не найден",
-  //         },
-  //         HttpStatus.NOT_FOUND,
-  //         {
-  //           cause: error,
-  //         },
-  //       );
-  //     }
-  //   }
 }

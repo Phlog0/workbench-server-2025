@@ -1,39 +1,73 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException, HttpStatus } from '@nestjs/common';
-import { ProjectsService } from './projects.service';
-import { CreateProjectDto } from './dto/create-project.dto';
-import { UpdateProjectDto } from './dto/update-project.dto';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  HttpException,
+  HttpStatus,
+  ParseIntPipe,
+  HttpCode,
+} from "@nestjs/common";
+import { ProjectsService } from "./projects.service";
+import { CreateProjectDto } from "./dto/create-project.dto";
+import { SkipAuth } from "src/auth/decorators/skip-auth.decorator";
+import puppeteer from "puppeteer";
 
-@Controller('api/projects')
+@SkipAuth()
+@Controller("api/projects")
 export class ProjectsController {
-  constructor(private readonly projectsService: ProjectsService) { }
+  constructor(private readonly projectsService: ProjectsService) {}
 
   @Post()
   createProject(@Body() createProjectDto: CreateProjectDto) {
     return this.projectsService.createProject(createProjectDto);
   }
 
-  @Get()
-  findAllProjects() {
-    return this.projectsService.findAllProjects();
+  @Get("/all-projects")
+  @HttpCode(HttpStatus.OK)
+  async findAllProjects() {
+    return await this.projectsService.findAllProjects();
   }
-  @Get(':id')
-  findProject(@Param('id') id: string) {
+  @Get(":id")
+  async findProjectInfo(@Param("id") id: string) {
     try {
-
-      return this.projectsService.findProject(id);
+      return await this.projectsService.findProjectInfo(id);
     } catch (error) {
-      throw new HttpException('FORBIDDEN', HttpStatus.FORBIDDEN);
+      throw new HttpException("FORBIDDEN", HttpStatus.FORBIDDEN);
+    }
+  }
+  @Get("project-scheme/:id")
+  async findProjectScheme(@Param("id") id: string) {
+    try {
+      const projectScheme = await this.projectsService.findProjectScheme(id);
+
+      return {
+        message: "Проект найден",
+        ...projectScheme,
+      };
+    } catch (error) {
+      throw new HttpException("FORBIDDEN", HttpStatus.FORBIDDEN);
     }
   }
 
+  @Patch(":id")
+  async update(@Param("id") id: string, @Body() updateProjectDto: CreateProjectDto) {
+    return await this.projectsService.updateProject(id, updateProjectDto);
+  }
+  @Patch("/project-scheme/:id")
+  async updateProjectScheme(
+    @Param("id") id: string,
+    // !! Что с этим сделать? Какой-то мега-парсер...?
+    @Body() updateProjectDto: any,
+  ) {
+    return await this.projectsService.updateProjectScheme(id, updateProjectDto);
+  }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto) {
-  //   return this.projectsService.update(+id, updateProjectDto);
-  // }
-
-  @Delete(':id')
-  removeProject(@Param('id') id: string) {
-    return this.projectsService.removeProject(id);
+  @Delete(":id")
+  async removeProject(@Param("id") id: string) {
+    return await this.projectsService.removeProject(id);
   }
 }
