@@ -14,7 +14,7 @@ import { SavePdfService } from "./save-pdf.service";
 import { CreateSavePdfDto } from "./dto/create-save-pdf.dto";
 import { UpdateSavePdfDto } from "./dto/update-save-pdf.dto";
 import { Request } from "express";
-import { SkipAuth } from "src/auth/decorators/skip-auth.decorator";
+import { SkipAuth } from "@/auth/decorators/skip-auth.decorator";
 import { AnyFilesInterceptor, FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
 import { extname, join } from "path";
@@ -28,7 +28,7 @@ export class SavePdfController {
     FileInterceptor("file", {
       storage: diskStorage({
         destination(req, file, callback) {
-          callback(null, join(process.cwd(), "dictionares", "documentsPDF"));
+          callback(null, join(process.cwd(), "dictionaries", "documentsPDF"));
         },
         filename(req, file, callback) {
           const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);

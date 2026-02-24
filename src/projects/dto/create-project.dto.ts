@@ -1,5 +1,7 @@
 import { ProjectType } from "@prisma/client";
-import { IsDate, IsIn, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsDate, IsIn, IsNotEmpty, IsOptional, IsString, ValidateNested } from "class-validator";
+import { SchemeDto } from "./scheme.dto";
+import { Type } from "class-transformer";
 
 export class CreateProjectDto {
   @IsString()
@@ -19,4 +21,12 @@ export class CreateProjectDto {
   @IsOptional()
   @IsDate()
   updatedAt?: Date;
+
+  @IsOptional()
+  @IsString()
+  prompt?: string;
+  // @IsOptional()
+  // @ValidateNested() // <-- ВАЖНО: указываем, что объект вложенный
+  // @Type(() => SchemeDto) // <-- ВАЖНО: указываем тип для преобразования
+  // projectScheme: SchemeDto;
 }

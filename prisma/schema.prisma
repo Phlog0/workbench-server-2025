@@ -30,12 +30,14 @@ enum ProjectType {
 }
 
 model User {
-  id           Int           @id @default(autoincrement())
-  firstName    String
-  secondName   String
-  password     String
-  email        String        @unique
-  refreshToken RefreshToken?
+  id             Int             @id @default(autoincrement())
+  firstName      String
+  secondName     String
+  password       String
+  email          String          @unique
+  refreshToken   RefreshToken?
+  activated      DateTime?
+  activationLink ActivationLink?
 }
 
 model RefreshToken {
@@ -43,4 +45,15 @@ model RefreshToken {
   user   User   @relation(fields: [userId], references: [id])
   userId Int    @unique
   token  String @unique
+
+  @@unique([userId, token])
+}
+
+model ActivationLink {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int    @unique
+  link   String
+
+  @@unique([userId, link])
 }

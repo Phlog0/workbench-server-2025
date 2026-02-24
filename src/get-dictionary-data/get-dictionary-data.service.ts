@@ -1,11 +1,10 @@
 import { Injectable } from "@nestjs/common";
 
-import { getListData, getTableData } from "src/shared/lib/get-excel-data/get-data-from-excel";
-
 import { QueryParametersGetDictionary } from "./dto/query-parameters-get-dictionary";
-import { RFNodeTypesValues } from "src/shared/rf-nodes-types";
-import { PossibleFilename } from "src/@types";
-import { isFileNameList } from "src/shared/lib/get-excel-data/types/type-guards";
+import { RFNodeTypesValues } from "@/shared/rf-nodes-types";
+import { PossibleFilename } from "@/@types";
+import { isFileNameList } from "@/shared/lib/get-excel-data/types/type-guards";
+import { getListData, getTableData } from "@/shared/lib/get-excel-data/get-data-from-excel";
 
 @Injectable()
 export class GetDictionaryDataService {

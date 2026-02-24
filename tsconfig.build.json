@@ -1,4 +1,17 @@
 {
   "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "incremental": false,
+    "tsBuildInfoFile": null
+    //   // ❌ ЭТА НАСТРОЙКА ЗАПРЕЩАЕТ ВЫВОД JS ФАЙЛОВ
+    //   "emitDeclarationOnly": false,
+    //   // ❌ ИЛИ ЭТА (полный запрет вывода)
+    //   "noEmit": false,
+    //   // ✅ Должно быть включено для работы NestJS
+    //   "emitDecoratorMetadata": true,
+    //   "experimentalDecorators": true,
+    //   // ✅ Убедитесь, что путь корректный
+    //   "outDir": "./dist"
+  },
   "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
 }

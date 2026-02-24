@@ -1,12 +1,8 @@
-import {
-  ConflictException,
-  ForbiddenException,
-  Injectable,
-  NotFoundException,
-} from "@nestjs/common";
-import { PrismaService } from "src/prisma.service";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import { PrismaService } from "@/prisma.service";
 import { User as UserModel } from "@prisma/client";
 import * as bcrypt from "bcryptjs";
+import { randomUUID } from "crypto";
 type CreateUserArgs = { email: string; firstName: string; password: string; secondName: string };
 @Injectable()
 export class UsersService {
@@ -21,16 +17,22 @@ export class UsersService {
     return user;
   }
 
-  async createUser(createUserDto: CreateUserArgs): Promise<UserModel> {
+  async createUser(createUserDto: CreateUserArgs) {
     const isUserExist = await this.prisma.user.findUnique({
       where: { email: createUserDto.email },
     });
-    if (isUserExist) throw new ConflictException("Данный email уже используется");
+    if (isUserExist) {
+      throw new BadRequestException("Данный email уже используется");
+    }
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(createUserDto.password, salt);
+    const newLink = randomUUID();
     const createdUser = await this.prisma.user.create({
       data: { ...createUserDto, password: hashedPassword },
     });
-    return createdUser;
+    const activationLink = await this.prisma.activationLink.create({
+      data: { link: newLink, userId: createdUser.id },
+    });
+    return { createdUser, activationLink };
   }
 }

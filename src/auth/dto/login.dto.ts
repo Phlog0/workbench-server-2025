@@ -1,10 +1,10 @@
-import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
+import { IsString, IsNotEmpty, MinLength, MaxLength, IsEmail } from "class-validator";
 
-export class SignUpAuthDto {
-  @IsString()
-  firstName: string;
-  @IsString()
-  secondName: string;
+export class LoginDto {
+  //   @IsString()
+  //   firstName: string;
+  //   @IsString()
+  //   secondName: string;
   @IsString()
   @IsNotEmpty()
   @MinLength(6, {
@@ -15,6 +15,6 @@ export class SignUpAuthDto {
   })
   password: string;
   @IsString()
-  @IsEmail()
+  @IsEmail({}, { message: "Введите корректный email адресс" })
   email: string;
 }

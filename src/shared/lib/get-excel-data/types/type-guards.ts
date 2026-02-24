@@ -9,7 +9,7 @@ import {
   PossibleFilename,
   PossibleFilenameList,
   PossibleFilenameTable,
-} from "src/@types";
+} from "@/@types";
 import { RF_NODE_TYPES, RFNodeTypesValues } from "../../../rf-nodes-types";
 
 export function isCell35KvFileName(

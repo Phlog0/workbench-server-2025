@@ -1,7 +1,7 @@
-import { PossibleFilenameTable } from "src/@types";
+import { PossibleFilenameTable } from "@/@types";
 import { WorkBook } from "xlsx";
 import { TableResult } from "../types";
-import { RFNodeTypesValues } from "src/shared/rf-nodes-types";
+import { RFNodeTypesValues } from "@/shared/rf-nodes-types";
 import { cell04KvTableResult } from "./cell-04kv-table-result";
 import { section04KvTableResult } from "./section-04kv-table-result";
 import { pt1004KvTableResult } from "./pt-1004kv-table-result";
@@ -28,9 +28,9 @@ type TableHandler = (
 ) => TableResult;
 
 export const tableHandlers: Partial<Record<RFNodeTypesValues, TableHandler>> = {
-  Cell04Kv: cell04KvTableResult,
+  Cell04Kv: cell10KvTableResult,
   Cell10Kv: cell10KvTableResult,
-  Cell35Kv: cell35KvTableResult,
+  Cell35Kv: cell10KvTableResult,
   Section04Kv: section04KvTableResult,
   Section10Kv: section10KvTableResult,
   Section35Kv: section35KvTableResult,

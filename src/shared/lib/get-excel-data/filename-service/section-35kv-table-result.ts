@@ -1,7 +1,7 @@
 import { utils, WorkBook } from "xlsx";
 
 import { NotFoundException } from "@nestjs/common";
-import { FilenameForTableSection10Kv } from "src/@types";
+import { FilenameForTableSection10Kv } from "@/@types";
 import { TableResult } from "../types";
 
 export const section35KvTableResult = (

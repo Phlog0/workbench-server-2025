@@ -2,7 +2,7 @@ import { utils, WorkBook } from "xlsx";
 import { defaultSheetCellValue } from "../default-excel-values";
 import { NotFoundException } from "@nestjs/common";
 import { TableResult } from "../types";
-import { FilenameForTableCell10Kv } from "src/@types";
+import { FilenameForTableCell10Kv } from "@/@types";
 
 export const cell10KvTableResult = (
   fileName: FilenameForTableCell10Kv,

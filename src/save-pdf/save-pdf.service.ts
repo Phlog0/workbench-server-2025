@@ -1,7 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { CreateSavePdfDto } from "./dto/create-save-pdf.dto";
 import { UpdateSavePdfDto } from "./dto/update-save-pdf.dto";
-import puppeteer from "puppeteer";
 import multer from "multer";
 import { join } from "path/posix";
 

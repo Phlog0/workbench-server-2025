@@ -1,10 +1,10 @@
-import { IsString, IsNotEmpty, MinLength, MaxLength, IsEmail } from "class-validator";
+import { IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from "class-validator";
 
-export class SignInAuthDto {
-  //   @IsString()
-  //   firstName: string;
-  //   @IsString()
-  //   secondName: string;
+export class RegisterDto {
+  @IsString()
+  firstName: string;
+  @IsString()
+  secondName: string;
   @IsString()
   @IsNotEmpty()
   @MinLength(6, {
