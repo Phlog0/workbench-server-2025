@@ -9,7 +9,6 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   const port = configService.get<number>("SERVER_PORT", 3000);
   const clientUrl = configService.get<string>("CLIENT_URL");
-  console.log("CORS enabled for:", clientUrl);
   const databaseUrl = configService.get<string>("DATABASE_URL");
   app.enableCors({
     origin: [clientUrl, databaseUrl],
@@ -22,7 +21,7 @@ async function bootstrap() {
   app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
   app.use(cookieParser());
 
-  await app.listen(port);
+  await app.listen(port, "0.0.0.0");
   console.log(`🚀 Server running on port ${port}`);
 }
 bootstrap();

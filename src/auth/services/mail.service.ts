@@ -19,8 +19,7 @@ export class MailService {
       // });
       console.log("Посылаем на почту...");
     } catch (error) {
-      console.log("error");
-      console.log(error);
+      console.error(error);
     }
   }
 }
