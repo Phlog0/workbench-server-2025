@@ -11,11 +11,11 @@ export class TokenService {
   async generateTokens(payload: UserDto) {
     const accessToken = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_ACCESS_SECRET,
-      expiresIn: "10s",
+      expiresIn: "30d",
     });
     const refreshToken = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_REFRESH_SECRET,
-      expiresIn: "30s",
+      expiresIn: "180d",
     });
     return { accessToken, refreshToken };
   }
