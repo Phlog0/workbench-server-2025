@@ -28,3 +28,11 @@
 ### 👥 Пользователи и роли
 
 - Регистрация / Авторизация
+
+# Как воспользоваться:
+
+1. Скачать репозиторий
+2. npm install
+3. npx prisma migrate deploy
+4. npx prisma generate
+5. npm run build
