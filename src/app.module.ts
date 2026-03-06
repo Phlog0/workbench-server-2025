@@ -9,6 +9,7 @@ import { SavePdfModule } from "./save-pdf/save-pdf.module";
 import { MailerModule } from "@nestjs-modules/mailer";
 import { AiModule } from "./ai/ai.module";
 import { ConfigModule } from "@nestjs/config";
+import { SocketEventsModule } from './socket-events/socket-events.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { ConfigModule } from "@nestjs/config";
       isGlobal: true,
       envFilePath: `.env`,
     }),
+    SocketEventsModule,
   ],
   controllers: [],
   providers: [

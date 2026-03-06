@@ -43,9 +43,6 @@ export class AuthController {
   async verifyUser(@Req() request: Request, @Res() response: Response) {
     const refreshToken = request.cookies["refreshToken"];
 
-    console.log({
-      sendedToken: refreshToken,
-    });
     if (!refreshToken || typeof refreshToken !== "string") {
       throw new UnauthorizedException("Вы не авторизованы");
     }

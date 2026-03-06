@@ -2,6 +2,7 @@ import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { ValidationPipe } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
 async function bootstrap() {
@@ -20,7 +21,14 @@ async function bootstrap() {
   app.use(bodyParser.json({ limit: "100mb" }));
   app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
   app.use(cookieParser());
-
+  const config = new DocumentBuilder()
+    .setTitle("Workbench-server-api")
+    .setDescription("Описание API сервера")
+    .setVersion("1.0")
+    .addTag("API")
+    .build();
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup("api", app, documentFactory);
   await app.listen(port, "0.0.0.0");
   console.log(`🚀 Server running on port ${port}`);
 }

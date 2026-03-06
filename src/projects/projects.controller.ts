@@ -14,16 +14,19 @@ import {
 import { ProjectsService } from "./projects.service";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { SkipAuth } from "@/auth/decorators/skip-auth.decorator";
-
+import { ApiCreatedResponse, ApiTags } from "@nestjs/swagger";
+import { CreatedProjectResponse } from "./dto/created-project-response.dto";
+@ApiTags("projects")
 @Controller("projects")
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 
+  @ApiCreatedResponse({ type: CreatedProjectResponse })
   @Post("create")
   createProject(@Body() createProjectDto: CreateProjectDto) {
     return this.projectsService.createProject(createProjectDto);
   }
-
+  @ApiCreatedResponse({ type: CreatedProjectResponse })
   @Get("all-projects")
   async findAllProjects() {
     return await this.projectsService.findAllProjects();
