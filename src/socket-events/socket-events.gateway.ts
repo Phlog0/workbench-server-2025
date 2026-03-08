@@ -14,6 +14,8 @@ import { OnlineUsers, SocketsToUser, UserId } from "./types/types";
 import { SOCKET_EVENTS } from "./socket-events-keys";
 import { SetUserIdResponseDto } from "./dto/set-user-id-response-dto";
 import { ConfigService } from "@nestjs/config";
+import { Project } from "@/generated/prisma/client";
+import { JoinRoomResponseDto } from "./dto/join-room-response.dto.ts";
 @WebSocketGateway({
   cors: {
     origin: ["http://localhost:5173"],
@@ -64,7 +66,7 @@ export class SocketEventsGateway {
       success: true,
       userId,
       onlineCount: onlineCount.length,
-      userConnectionsCount: onlineCount[0].sockets.length || 1,
+      userConnectionsCount: onlineCount[0].socket.length || 1,
     });
     this.emitBroadcastOnlineCount(onlineCount.length);
   }
@@ -74,5 +76,33 @@ export class SocketEventsGateway {
     await this.socketEventsService.userLogout(userId);
     const onlineCount = await this.socketEventsService.broadcastOnlineCount(userId);
     this.emitBroadcastOnlineCount(onlineCount.length);
+  }
+  @SubscribeMessage(SOCKET_EVENTS.JOIN_ROOM)
+  async joinRoom(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() body: { userId: UserId; projectId: Project["id"] },
+    // @Ack() callback: (data: JoinRoomResponseDto) => void,
+  ) {
+    const { projectId, userId } = body;
+    this.server.in(client.id).socketsJoin(`project:${projectId}`);
+    await this.socketEventsService.joinRoom(userId, projectId, client.id);
+    const onlineUsers = await this.socketEventsService.getProjectOnlineCount(projectId);
+    this.server
+      .to(`project:${projectId}`)
+      .emit(SOCKET_EVENTS.PROJECT_USER_ONLINE_COUNT, { userId, projectId, onlineUsers });
+  }
+
+  @SubscribeMessage(SOCKET_EVENTS.LEAVE_ROOM)
+  async leaveRoom(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() body: { userId: UserId; projectId: Project["id"] },
+  ) {
+    const { projectId, userId } = body;
+    this.server.in(client.id).socketsLeave(`project:${projectId}`);
+    await this.socketEventsService.leaveRoom(userId, projectId, client.id);
+    const onlineUsers = await this.socketEventsService.getProjectOnlineCount(projectId);
+    this.server
+      .to(`project:${projectId}`)
+      .emit(SOCKET_EVENTS.PROJECT_USER_ONLINE_COUNT, { userId, projectId, onlineUsers });
   }
 }

@@ -242,7 +242,7 @@ export type UserWhereInput = {
   isOnline?: Prisma.BoolFilter<"User"> | boolean
   refreshToken?: Prisma.XOR<Prisma.RefreshTokenNullableScalarRelationFilter, Prisma.RefreshTokenWhereInput> | null
   activationLink?: Prisma.XOR<Prisma.ActivationLinkNullableScalarRelationFilter, Prisma.ActivationLinkWhereInput> | null
-  sockets?: Prisma.SocketsListRelationFilter
+  socket?: Prisma.SocketListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -256,7 +256,7 @@ export type UserOrderByWithRelationInput = {
   isOnline?: Prisma.SortOrder
   refreshToken?: Prisma.RefreshTokenOrderByWithRelationInput
   activationLink?: Prisma.ActivationLinkOrderByWithRelationInput
-  sockets?: Prisma.SocketsOrderByRelationAggregateInput
+  socket?: Prisma.SocketOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -273,7 +273,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   isOnline?: Prisma.BoolFilter<"User"> | boolean
   refreshToken?: Prisma.XOR<Prisma.RefreshTokenNullableScalarRelationFilter, Prisma.RefreshTokenWhereInput> | null
   activationLink?: Prisma.XOR<Prisma.ActivationLinkNullableScalarRelationFilter, Prisma.ActivationLinkWhereInput> | null
-  sockets?: Prisma.SocketsListRelationFilter
+  socket?: Prisma.SocketListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -316,7 +316,7 @@ export type UserCreateInput = {
   isOnline?: boolean
   refreshToken?: Prisma.RefreshTokenCreateNestedOneWithoutUserInput
   activationLink?: Prisma.ActivationLinkCreateNestedOneWithoutUserInput
-  sockets?: Prisma.SocketsCreateNestedManyWithoutUserInput
+  socket?: Prisma.SocketCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -330,7 +330,7 @@ export type UserUncheckedCreateInput = {
   isOnline?: boolean
   refreshToken?: Prisma.RefreshTokenUncheckedCreateNestedOneWithoutUserInput
   activationLink?: Prisma.ActivationLinkUncheckedCreateNestedOneWithoutUserInput
-  sockets?: Prisma.SocketsUncheckedCreateNestedManyWithoutUserInput
+  socket?: Prisma.SocketUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -343,7 +343,7 @@ export type UserUpdateInput = {
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshToken?: Prisma.RefreshTokenUpdateOneWithoutUserNestedInput
   activationLink?: Prisma.ActivationLinkUpdateOneWithoutUserNestedInput
-  sockets?: Prisma.SocketsUpdateManyWithoutUserNestedInput
+  socket?: Prisma.SocketUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -357,7 +357,7 @@ export type UserUncheckedUpdateInput = {
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshToken?: Prisma.RefreshTokenUncheckedUpdateOneWithoutUserNestedInput
   activationLink?: Prisma.ActivationLinkUncheckedUpdateOneWithoutUserNestedInput
-  sockets?: Prisma.SocketsUncheckedUpdateManyWithoutUserNestedInput
+  socket?: Prisma.SocketUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -454,18 +454,18 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type UserCreateNestedOneWithoutSocketsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSocketsInput, Prisma.UserUncheckedCreateWithoutSocketsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSocketsInput
+export type UserCreateNestedOneWithoutSocketInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSocketInput, Prisma.UserUncheckedCreateWithoutSocketInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSocketInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutSocketsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSocketsInput, Prisma.UserUncheckedCreateWithoutSocketsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSocketsInput
-  upsert?: Prisma.UserUpsertWithoutSocketsInput
+export type UserUpdateOneRequiredWithoutSocketNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSocketInput, Prisma.UserUncheckedCreateWithoutSocketInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSocketInput
+  upsert?: Prisma.UserUpsertWithoutSocketInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSocketsInput, Prisma.UserUpdateWithoutSocketsInput>, Prisma.UserUncheckedUpdateWithoutSocketsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSocketInput, Prisma.UserUpdateWithoutSocketInput>, Prisma.UserUncheckedUpdateWithoutSocketInput>
 }
 
 export type UserCreateNestedOneWithoutRefreshTokenInput = {
@@ -496,7 +496,7 @@ export type UserUpdateOneRequiredWithoutActivationLinkNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutActivationLinkInput, Prisma.UserUpdateWithoutActivationLinkInput>, Prisma.UserUncheckedUpdateWithoutActivationLinkInput>
 }
 
-export type UserCreateWithoutSocketsInput = {
+export type UserCreateWithoutSocketInput = {
   firstName: string
   secondName: string
   password: string
@@ -508,7 +508,7 @@ export type UserCreateWithoutSocketsInput = {
   activationLink?: Prisma.ActivationLinkCreateNestedOneWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutSocketsInput = {
+export type UserUncheckedCreateWithoutSocketInput = {
   id?: number
   firstName: string
   secondName: string
@@ -521,23 +521,23 @@ export type UserUncheckedCreateWithoutSocketsInput = {
   activationLink?: Prisma.ActivationLinkUncheckedCreateNestedOneWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutSocketsInput = {
+export type UserCreateOrConnectWithoutSocketInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutSocketsInput, Prisma.UserUncheckedCreateWithoutSocketsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSocketInput, Prisma.UserUncheckedCreateWithoutSocketInput>
 }
 
-export type UserUpsertWithoutSocketsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutSocketsInput, Prisma.UserUncheckedUpdateWithoutSocketsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutSocketsInput, Prisma.UserUncheckedCreateWithoutSocketsInput>
+export type UserUpsertWithoutSocketInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSocketInput, Prisma.UserUncheckedUpdateWithoutSocketInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSocketInput, Prisma.UserUncheckedCreateWithoutSocketInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutSocketsInput = {
+export type UserUpdateToOneWithWhereWithoutSocketInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutSocketsInput, Prisma.UserUncheckedUpdateWithoutSocketsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSocketInput, Prisma.UserUncheckedUpdateWithoutSocketInput>
 }
 
-export type UserUpdateWithoutSocketsInput = {
+export type UserUpdateWithoutSocketInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   secondName?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
@@ -549,7 +549,7 @@ export type UserUpdateWithoutSocketsInput = {
   activationLink?: Prisma.ActivationLinkUpdateOneWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutSocketsInput = {
+export type UserUncheckedUpdateWithoutSocketInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   secondName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -571,7 +571,7 @@ export type UserCreateWithoutRefreshTokenInput = {
   avatar?: string | null
   isOnline?: boolean
   activationLink?: Prisma.ActivationLinkCreateNestedOneWithoutUserInput
-  sockets?: Prisma.SocketsCreateNestedManyWithoutUserInput
+  socket?: Prisma.SocketCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRefreshTokenInput = {
@@ -584,7 +584,7 @@ export type UserUncheckedCreateWithoutRefreshTokenInput = {
   avatar?: string | null
   isOnline?: boolean
   activationLink?: Prisma.ActivationLinkUncheckedCreateNestedOneWithoutUserInput
-  sockets?: Prisma.SocketsUncheckedCreateNestedManyWithoutUserInput
+  socket?: Prisma.SocketUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRefreshTokenInput = {
@@ -612,7 +612,7 @@ export type UserUpdateWithoutRefreshTokenInput = {
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   activationLink?: Prisma.ActivationLinkUpdateOneWithoutUserNestedInput
-  sockets?: Prisma.SocketsUpdateManyWithoutUserNestedInput
+  socket?: Prisma.SocketUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRefreshTokenInput = {
@@ -625,7 +625,7 @@ export type UserUncheckedUpdateWithoutRefreshTokenInput = {
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   activationLink?: Prisma.ActivationLinkUncheckedUpdateOneWithoutUserNestedInput
-  sockets?: Prisma.SocketsUncheckedUpdateManyWithoutUserNestedInput
+  socket?: Prisma.SocketUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutActivationLinkInput = {
@@ -637,7 +637,7 @@ export type UserCreateWithoutActivationLinkInput = {
   avatar?: string | null
   isOnline?: boolean
   refreshToken?: Prisma.RefreshTokenCreateNestedOneWithoutUserInput
-  sockets?: Prisma.SocketsCreateNestedManyWithoutUserInput
+  socket?: Prisma.SocketCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutActivationLinkInput = {
@@ -650,7 +650,7 @@ export type UserUncheckedCreateWithoutActivationLinkInput = {
   avatar?: string | null
   isOnline?: boolean
   refreshToken?: Prisma.RefreshTokenUncheckedCreateNestedOneWithoutUserInput
-  sockets?: Prisma.SocketsUncheckedCreateNestedManyWithoutUserInput
+  socket?: Prisma.SocketUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutActivationLinkInput = {
@@ -678,7 +678,7 @@ export type UserUpdateWithoutActivationLinkInput = {
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshToken?: Prisma.RefreshTokenUpdateOneWithoutUserNestedInput
-  sockets?: Prisma.SocketsUpdateManyWithoutUserNestedInput
+  socket?: Prisma.SocketUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutActivationLinkInput = {
@@ -691,7 +691,7 @@ export type UserUncheckedUpdateWithoutActivationLinkInput = {
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   refreshToken?: Prisma.RefreshTokenUncheckedUpdateOneWithoutUserNestedInput
-  sockets?: Prisma.SocketsUncheckedUpdateManyWithoutUserNestedInput
+  socket?: Prisma.SocketUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -700,11 +700,11 @@ export type UserUncheckedUpdateWithoutActivationLinkInput = {
  */
 
 export type UserCountOutputType = {
-  sockets: number
+  socket: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  sockets?: boolean | UserCountOutputTypeCountSocketsArgs
+  socket?: boolean | UserCountOutputTypeCountSocketArgs
 }
 
 /**
@@ -720,8 +720,8 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountSocketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SocketsWhereInput
+export type UserCountOutputTypeCountSocketArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SocketWhereInput
 }
 
 
@@ -736,7 +736,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   isOnline?: boolean
   refreshToken?: boolean | Prisma.User$refreshTokenArgs<ExtArgs>
   activationLink?: boolean | Prisma.User$activationLinkArgs<ExtArgs>
-  sockets?: boolean | Prisma.User$socketsArgs<ExtArgs>
+  socket?: boolean | Prisma.User$socketArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -777,7 +777,7 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   refreshToken?: boolean | Prisma.User$refreshTokenArgs<ExtArgs>
   activationLink?: boolean | Prisma.User$activationLinkArgs<ExtArgs>
-  sockets?: boolean | Prisma.User$socketsArgs<ExtArgs>
+  socket?: boolean | Prisma.User$socketArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -788,7 +788,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     refreshToken: Prisma.$RefreshTokenPayload<ExtArgs> | null
     activationLink: Prisma.$ActivationLinkPayload<ExtArgs> | null
-    sockets: Prisma.$SocketsPayload<ExtArgs>[]
+    socket: Prisma.$SocketPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1195,7 +1195,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   refreshToken<T extends Prisma.User$refreshTokenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$refreshTokenArgs<ExtArgs>>): Prisma.Prisma__RefreshTokenClient<runtime.Types.Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   activationLink<T extends Prisma.User$activationLinkArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$activationLinkArgs<ExtArgs>>): Prisma.Prisma__ActivationLinkClient<runtime.Types.Result.GetResult<Prisma.$ActivationLinkPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  sockets<T extends Prisma.User$socketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$socketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SocketsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  socket<T extends Prisma.User$socketArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$socketArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SocketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1659,27 +1659,27 @@ export type User$activationLinkArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
- * User.sockets
+ * User.socket
  */
-export type User$socketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$socketArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Sockets
+   * Select specific fields to fetch from the Socket
    */
-  select?: Prisma.SocketsSelect<ExtArgs> | null
+  select?: Prisma.SocketSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Sockets
+   * Omit specific fields from the Socket
    */
-  omit?: Prisma.SocketsOmit<ExtArgs> | null
+  omit?: Prisma.SocketOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.SocketsInclude<ExtArgs> | null
-  where?: Prisma.SocketsWhereInput
-  orderBy?: Prisma.SocketsOrderByWithRelationInput | Prisma.SocketsOrderByWithRelationInput[]
-  cursor?: Prisma.SocketsWhereUniqueInput
+  include?: Prisma.SocketInclude<ExtArgs> | null
+  where?: Prisma.SocketWhereInput
+  orderBy?: Prisma.SocketOrderByWithRelationInput | Prisma.SocketOrderByWithRelationInput[]
+  cursor?: Prisma.SocketWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.SocketsScalarFieldEnum | Prisma.SocketsScalarFieldEnum[]
+  distinct?: Prisma.SocketScalarFieldEnum | Prisma.SocketScalarFieldEnum[]
 }
 
 /**

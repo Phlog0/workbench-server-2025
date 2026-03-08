@@ -35,7 +35,7 @@ import { SocketEventsModule } from "./socket-events/socket-events.module";
     AiModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `.development.env`,
+      envFilePath: ".env",
     }),
     SocketEventsModule,
   ],

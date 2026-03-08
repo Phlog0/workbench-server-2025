@@ -53,7 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Project: 'Project',
   User: 'User',
-  Sockets: 'Sockets',
+  Socket: 'Socket',
   RefreshToken: 'RefreshToken',
   ActivationLink: 'ActivationLink'
 } as const
@@ -101,12 +101,16 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const SocketsScalarFieldEnum = {
+export const SocketScalarFieldEnum = {
   id: 'id',
-  userId: 'userId'
+  userId: 'userId',
+  projectId: 'projectId',
+  joinedAt: 'joinedAt',
+  leftAt: 'leftAt',
+  isOnline: 'isOnline'
 } as const
 
-export type SocketsScalarFieldEnum = (typeof SocketsScalarFieldEnum)[keyof typeof SocketsScalarFieldEnum]
+export type SocketScalarFieldEnum = (typeof SocketScalarFieldEnum)[keyof typeof SocketScalarFieldEnum]
 
 
 export const RefreshTokenScalarFieldEnum = {

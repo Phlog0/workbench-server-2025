@@ -36,9 +36,13 @@ export class TokenService {
     return createdToken;
   }
   async removeToken(token: string) {
-    const deletedToken = await this.prismaService.refreshToken.delete({ where: { token } });
+    const tokenData = await this.prismaService.refreshToken.findFirst({ where: { token } });
+    if (tokenData) {
+      const deletedToken = await this.prismaService.refreshToken.delete({ where: { token } });
 
-    return deletedToken;
+      return deletedToken;
+    }
+    console.log("Токен не найден. Нечего удалять");
   }
 
   async validateAccessToken(token: string) {

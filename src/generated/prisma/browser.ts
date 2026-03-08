@@ -28,10 +28,10 @@ export type Project = Prisma.ProjectModel
  */
 export type User = Prisma.UserModel
 /**
- * Model Sockets
+ * Model Socket
  * 
  */
-export type Sockets = Prisma.SocketsModel
+export type Socket = Prisma.SocketModel
 /**
  * Model RefreshToken
  * 

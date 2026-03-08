@@ -386,7 +386,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   Project: 'Project',
   User: 'User',
-  Sockets: 'Sockets',
+  Socket: 'Socket',
   RefreshToken: 'RefreshToken',
   ActivationLink: 'ActivationLink'
 } as const
@@ -404,7 +404,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "project" | "user" | "sockets" | "refreshToken" | "activationLink"
+    modelProps: "project" | "user" | "socket" | "refreshToken" | "activationLink"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -556,77 +556,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Sockets: {
-      payload: Prisma.$SocketsPayload<ExtArgs>
-      fields: Prisma.SocketsFieldRefs
+    Socket: {
+      payload: Prisma.$SocketPayload<ExtArgs>
+      fields: Prisma.SocketFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.SocketsFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketsPayload> | null
+          args: Prisma.SocketFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.SocketsFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketsPayload>
+          args: Prisma.SocketFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketPayload>
         }
         findFirst: {
-          args: Prisma.SocketsFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketsPayload> | null
+          args: Prisma.SocketFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.SocketsFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketsPayload>
+          args: Prisma.SocketFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketPayload>
         }
         findMany: {
-          args: Prisma.SocketsFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketsPayload>[]
+          args: Prisma.SocketFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketPayload>[]
         }
         create: {
-          args: Prisma.SocketsCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketsPayload>
+          args: Prisma.SocketCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketPayload>
         }
         createMany: {
-          args: Prisma.SocketsCreateManyArgs<ExtArgs>
+          args: Prisma.SocketCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.SocketsCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketsPayload>[]
+          args: Prisma.SocketCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketPayload>[]
         }
         delete: {
-          args: Prisma.SocketsDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketsPayload>
+          args: Prisma.SocketDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketPayload>
         }
         update: {
-          args: Prisma.SocketsUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketsPayload>
+          args: Prisma.SocketUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketPayload>
         }
         deleteMany: {
-          args: Prisma.SocketsDeleteManyArgs<ExtArgs>
+          args: Prisma.SocketDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.SocketsUpdateManyArgs<ExtArgs>
+          args: Prisma.SocketUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.SocketsUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketsPayload>[]
+          args: Prisma.SocketUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketPayload>[]
         }
         upsert: {
-          args: Prisma.SocketsUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketsPayload>
+          args: Prisma.SocketUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocketPayload>
         }
         aggregate: {
-          args: Prisma.SocketsAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateSockets>
+          args: Prisma.SocketAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSocket>
         }
         groupBy: {
-          args: Prisma.SocketsGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.SocketsGroupByOutputType>[]
+          args: Prisma.SocketGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SocketGroupByOutputType>[]
         }
         count: {
-          args: Prisma.SocketsCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.SocketsCountAggregateOutputType> | number
+          args: Prisma.SocketCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SocketCountAggregateOutputType> | number
         }
       }
     }
@@ -844,12 +844,16 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const SocketsScalarFieldEnum = {
+export const SocketScalarFieldEnum = {
   id: 'id',
-  userId: 'userId'
+  userId: 'userId',
+  projectId: 'projectId',
+  joinedAt: 'joinedAt',
+  leftAt: 'leftAt',
+  isOnline: 'isOnline'
 } as const
 
-export type SocketsScalarFieldEnum = (typeof SocketsScalarFieldEnum)[keyof typeof SocketsScalarFieldEnum]
+export type SocketScalarFieldEnum = (typeof SocketScalarFieldEnum)[keyof typeof SocketScalarFieldEnum]
 
 
 export const RefreshTokenScalarFieldEnum = {
@@ -1104,7 +1108,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   project?: Prisma.ProjectOmit
   user?: Prisma.UserOmit
-  sockets?: Prisma.SocketsOmit
+  socket?: Prisma.SocketOmit
   refreshToken?: Prisma.RefreshTokenOmit
   activationLink?: Prisma.ActivationLinkOmit
 }

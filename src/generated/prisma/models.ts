@@ -10,7 +10,7 @@
  */
 export type * from './models/Project'
 export type * from './models/User'
-export type * from './models/Sockets'
+export type * from './models/Socket'
 export type * from './models/RefreshToken'
 export type * from './models/ActivationLink'
 export type * from './commonInputTypes'

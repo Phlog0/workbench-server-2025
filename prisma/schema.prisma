@@ -16,6 +16,8 @@ model Project {
   createdAt     DateTime    @default(now())
   updatedAt     DateTime?   @updatedAt
   projectScheme Json?
+  // projectParticipants ProjectParticipant[]
+  sockets       Socket[]
 }
 
 enum ProjectType {
@@ -34,15 +36,41 @@ model User {
   activated      DateTime?
   activationLink ActivationLink?
   avatar         String?
-  sockets        Sockets[]
+  socket         Socket[]
   isOnline       Boolean         @default(false)
+  // projectParticipants ProjectParticipant[]
 }
 
-model Sockets {
-  id     String @unique
-  user   User   @relation(fields: [userId], references: [id])
-  userId Int    @unique
+model Socket {
+  id        String    @unique
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int
+  // projectParticipant ProjectParticipant?
+  projectId String?
+  project   Project?  @relation(fields: [projectId], references: [id])
+  joinedAt  DateTime? @default(now())
+  leftAt    DateTime?
+  isOnline  Boolean   @default(false)
 }
+
+// Я объединю Socket
+// model ProjectParticipant {
+//   id        String    @id @default(uuid())
+//   userId    Int
+//   user      User      @relation(fields: [userId], references: [id])
+//   projectId String
+//   project   Project   @relation(fields: [projectId], references: [id])
+//   joinedAt  DateTime  @default(now())
+//   leftAt    DateTime?
+//   isOnline  Boolean   @default(false)
+//   socket    Socket    @relation(fields: [socketId], references: [id])
+//   socketId  String
+
+//   @@unique([userId, projectId])
+//   @@index([projectId])
+//   @@index([userId])
+//   @@index([isOnline])
+// }
 
 model RefreshToken {
   id     Int    @id @default(autoincrement())
