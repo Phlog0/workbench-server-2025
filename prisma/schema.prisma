@@ -18,6 +18,8 @@ model Project {
   projectScheme Json?
   // projectParticipants ProjectParticipant[]
   sockets       Socket[]
+  position      Json // { lat: number; lng: number}
+  markerColor   String
 }
 
 enum ProjectType {
@@ -50,7 +52,9 @@ model Socket {
   project   Project?  @relation(fields: [projectId], references: [id])
   joinedAt  DateTime? @default(now())
   leftAt    DateTime?
-  isOnline  Boolean   @default(false)
+
+  // По сути он не нужен. Если сокет есть - то юзер онлайн. Если есть projectId - значит юезр сидит в каком-то проекте.
+  // isOnline  Boolean   @default(false)
 }
 
 // Я объединю Socket
@@ -84,6 +88,7 @@ model RefreshToken {
 model ActivationLink {
   id     Int    @id @default(autoincrement())
   user   User   @relation(fields: [userId], references: [id])
+  // можно убрать @unique у userId
   userId Int    @unique
   link   String
 

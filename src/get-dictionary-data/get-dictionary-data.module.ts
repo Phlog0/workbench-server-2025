@@ -3,7 +3,7 @@ import { GetDictionaryDataService } from "./get-dictionary-data.service";
 import { GetDictionaryDataController } from "./get-dictionary-data.controller";
 
 @Module({
-  controllers: [GetDictionaryDataController],
-  providers: [GetDictionaryDataService],
+    controllers: [GetDictionaryDataController],
+    providers: [GetDictionaryDataService],
 })
 export class GetDictionaryDataModule {}

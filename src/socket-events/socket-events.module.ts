@@ -4,6 +4,7 @@ import { SocketEventsGateway } from "./socket-events.gateway";
 import { PrismaService } from "@/prisma.service";
 
 @Module({
-  providers: [SocketEventsGateway, SocketEventsService, PrismaService],
+    providers: [SocketEventsService, PrismaService],
+    exports: [SocketEventsService],
 })
 export class SocketEventsModule {}

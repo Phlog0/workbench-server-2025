@@ -8,15 +8,15 @@ import { MailService } from "./services/mail.service";
 import { TokenService } from "./services/token.service";
 
 @Module({
-  imports: [
-    JwtModule.register({
-      global: true,
+    imports: [
+        JwtModule.register({
+            global: true,
 
-      // signOptions: { expiresIn: "600s" },
-    }),
-  ],
-  controllers: [AuthController],
-  providers: [AuthService, UsersService, PrismaService, MailService, TokenService],
-  exports: [AuthService, TokenService],
+            // signOptions: { expiresIn: "600s" },
+        }),
+    ],
+    controllers: [AuthController],
+    providers: [AuthService, UsersService, PrismaService, MailService, TokenService],
+    exports: [AuthService, TokenService],
 })
 export class AuthModule {}

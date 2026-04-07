@@ -9,20 +9,20 @@ import { SkipAuth } from "@/auth/decorators/skip-auth.decorator";
 @Controller("getReadySolutionsList")
 // @Controller("api/get-dictionary-data")
 export class GetDictionaryDataController {
-  constructor(private readonly getDictionaryDataService: GetDictionaryDataService) {}
+    constructor(private readonly getDictionaryDataService: GetDictionaryDataService) {}
 
-  @SkipAuth()
-  @Get(":typeFolder/:fileName")
-  getDictionaryData(
-    @Param("typeFolder") typeFolder: RFNodeTypesValues,
-    @Param("fileName") fileName: PossibleFilename,
-    @Query() queryParams: QueryParametersGetDictionary,
-  ) {
-    const dictionaryData = this.getDictionaryDataService.getDictionaryData(
-      typeFolder,
-      fileName,
-      queryParams,
-    );
-    return { dictionaryData };
-  }
+    // @SkipAuth()
+    @Get(":typeFolder/:fileName")
+    getDictionaryData(
+        @Param("typeFolder") typeFolder: RFNodeTypesValues,
+        @Param("fileName") fileName: PossibleFilename,
+        @Query() queryParams: QueryParametersGetDictionary,
+    ) {
+        const dictionaryData = this.getDictionaryDataService.getDictionaryData(
+            typeFolder,
+            fileName,
+            queryParams,
+        );
+        return { dictionaryData };
+    }
 }

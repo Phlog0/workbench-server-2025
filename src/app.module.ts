@@ -12,39 +12,39 @@ import { ConfigModule } from "@nestjs/config";
 import { SocketEventsModule } from "./socket-events/socket-events.module";
 
 @Module({
-  imports: [
-    MailerModule.forRoot({
-      transport: {
-        host: process.env.EMAIL_SERVER,
-        port: Number(process.env.EMAIL_PORT),
-        secure: Boolean(process.env.EMAIL_SECURE),
-        auth: {
-          user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASSWORD,
-        },
-      },
-      defaults: {
-        from: '"nest-modules" <modules@nestjs.com>',
-      },
-    }),
+    imports: [
+        MailerModule.forRoot({
+            transport: {
+                host: process.env.EMAIL_SERVER,
+                port: Number(process.env.EMAIL_PORT),
+                secure: Boolean(process.env.EMAIL_SECURE),
+                auth: {
+                    user: process.env.EMAIL_USER,
+                    pass: process.env.EMAIL_PASSWORD,
+                },
+            },
+            defaults: {
+                from: '"nest-modules" <modules@nestjs.com>',
+            },
+        }),
 
-    ProjectsModule,
-    GetDictionaryDataModule,
-    AuthModule,
-    SavePdfModule,
-    AiModule,
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: ".env",
-    }),
-    SocketEventsModule,
-  ],
-  controllers: [],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
-  ],
+        ProjectsModule,
+        GetDictionaryDataModule,
+        AuthModule,
+        SavePdfModule,
+        AiModule,
+        ConfigModule.forRoot({
+            isGlobal: true,
+            envFilePath: ".env",
+        }),
+        SocketEventsModule,
+    ],
+    controllers: [],
+    providers: [
+        {
+            provide: APP_GUARD,
+            useClass: AuthGuard,
+        },
+    ],
 })
 export class AppModule {}

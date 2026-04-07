@@ -16,11 +16,11 @@ import type { FilenameForTableSection35Kv } from "./section-35kv";
 
 export type PossibleFilenameList = FilenameForListCell04Kv | FilenameForListCell10Kv;
 export type PossibleFilenameTable =
-  | FilenameForTableCell04Kv
-  | FilenameForTableCell10Kv
-  | FilenameForTableCell35Kv
-  | FilenameForTablePt1004Kv
-  | FilenameForTableSection04Kv
-  | FilenameForTableSection10Kv
-  | FilenameForTableSection35Kv;
+    | FilenameForTableCell04Kv
+    | FilenameForTableCell10Kv
+    | FilenameForTableCell35Kv
+    | FilenameForTablePt1004Kv
+    | FilenameForTableSection04Kv
+    | FilenameForTableSection10Kv
+    | FilenameForTableSection35Kv;
 export type PossibleFilename = PossibleFilenameList | PossibleFilenameTable;

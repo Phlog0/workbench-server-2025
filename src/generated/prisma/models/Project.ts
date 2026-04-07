@@ -31,6 +31,7 @@ export type ProjectMinAggregateOutputType = {
   description: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  markerColor: string | null
 }
 
 export type ProjectMaxAggregateOutputType = {
@@ -40,6 +41,7 @@ export type ProjectMaxAggregateOutputType = {
   description: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  markerColor: string | null
 }
 
 export type ProjectCountAggregateOutputType = {
@@ -50,6 +52,8 @@ export type ProjectCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   projectScheme: number
+  position: number
+  markerColor: number
   _all: number
 }
 
@@ -61,6 +65,7 @@ export type ProjectMinAggregateInputType = {
   description?: true
   createdAt?: true
   updatedAt?: true
+  markerColor?: true
 }
 
 export type ProjectMaxAggregateInputType = {
@@ -70,6 +75,7 @@ export type ProjectMaxAggregateInputType = {
   description?: true
   createdAt?: true
   updatedAt?: true
+  markerColor?: true
 }
 
 export type ProjectCountAggregateInputType = {
@@ -80,6 +86,8 @@ export type ProjectCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   projectScheme?: true
+  position?: true
+  markerColor?: true
   _all?: true
 }
 
@@ -163,6 +171,8 @@ export type ProjectGroupByOutputType = {
   createdAt: Date
   updatedAt: Date | null
   projectScheme: runtime.JsonValue | null
+  position: runtime.JsonValue
+  markerColor: string
   _count: ProjectCountAggregateOutputType | null
   _min: ProjectMinAggregateOutputType | null
   _max: ProjectMaxAggregateOutputType | null
@@ -194,6 +204,8 @@ export type ProjectWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   projectScheme?: Prisma.JsonNullableFilter<"Project">
+  position?: Prisma.JsonFilter<"Project">
+  markerColor?: Prisma.StringFilter<"Project"> | string
   sockets?: Prisma.SocketListRelationFilter
 }
 
@@ -205,6 +217,8 @@ export type ProjectOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   projectScheme?: Prisma.SortOrderInput | Prisma.SortOrder
+  position?: Prisma.SortOrder
+  markerColor?: Prisma.SortOrder
   sockets?: Prisma.SocketOrderByRelationAggregateInput
 }
 
@@ -219,6 +233,8 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   projectScheme?: Prisma.JsonNullableFilter<"Project">
+  position?: Prisma.JsonFilter<"Project">
+  markerColor?: Prisma.StringFilter<"Project"> | string
   sockets?: Prisma.SocketListRelationFilter
 }, "id">
 
@@ -230,6 +246,8 @@ export type ProjectOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   projectScheme?: Prisma.SortOrderInput | Prisma.SortOrder
+  position?: Prisma.SortOrder
+  markerColor?: Prisma.SortOrder
   _count?: Prisma.ProjectCountOrderByAggregateInput
   _max?: Prisma.ProjectMaxOrderByAggregateInput
   _min?: Prisma.ProjectMinOrderByAggregateInput
@@ -246,6 +264,8 @@ export type ProjectScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
   projectScheme?: Prisma.JsonNullableWithAggregatesFilter<"Project">
+  position?: Prisma.JsonWithAggregatesFilter<"Project">
+  markerColor?: Prisma.StringWithAggregatesFilter<"Project"> | string
 }
 
 export type ProjectCreateInput = {
@@ -256,6 +276,8 @@ export type ProjectCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   projectScheme?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  position: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  markerColor: string
   sockets?: Prisma.SocketCreateNestedManyWithoutProjectInput
 }
 
@@ -267,6 +289,8 @@ export type ProjectUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   projectScheme?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  position: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  markerColor: string
   sockets?: Prisma.SocketUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -278,6 +302,8 @@ export type ProjectUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   projectScheme?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  position?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  markerColor?: Prisma.StringFieldUpdateOperationsInput | string
   sockets?: Prisma.SocketUpdateManyWithoutProjectNestedInput
 }
 
@@ -289,6 +315,8 @@ export type ProjectUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   projectScheme?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  position?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  markerColor?: Prisma.StringFieldUpdateOperationsInput | string
   sockets?: Prisma.SocketUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -300,6 +328,8 @@ export type ProjectCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   projectScheme?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  position: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  markerColor: string
 }
 
 export type ProjectUpdateManyMutationInput = {
@@ -310,6 +340,8 @@ export type ProjectUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   projectScheme?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  position?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  markerColor?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectUncheckedUpdateManyInput = {
@@ -320,6 +352,8 @@ export type ProjectUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   projectScheme?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  position?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  markerColor?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectCountOrderByAggregateInput = {
@@ -330,6 +364,8 @@ export type ProjectCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   projectScheme?: Prisma.SortOrder
+  position?: Prisma.SortOrder
+  markerColor?: Prisma.SortOrder
 }
 
 export type ProjectMaxOrderByAggregateInput = {
@@ -339,6 +375,7 @@ export type ProjectMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  markerColor?: Prisma.SortOrder
 }
 
 export type ProjectMinOrderByAggregateInput = {
@@ -348,6 +385,7 @@ export type ProjectMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  markerColor?: Prisma.SortOrder
 }
 
 export type ProjectNullableScalarRelationFilter = {
@@ -395,6 +433,8 @@ export type ProjectCreateWithoutSocketsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   projectScheme?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  position: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  markerColor: string
 }
 
 export type ProjectUncheckedCreateWithoutSocketsInput = {
@@ -405,6 +445,8 @@ export type ProjectUncheckedCreateWithoutSocketsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string | null
   projectScheme?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  position: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  markerColor: string
 }
 
 export type ProjectCreateOrConnectWithoutSocketsInput = {
@@ -431,6 +473,8 @@ export type ProjectUpdateWithoutSocketsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   projectScheme?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  position?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  markerColor?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ProjectUncheckedUpdateWithoutSocketsInput = {
@@ -441,6 +485,8 @@ export type ProjectUncheckedUpdateWithoutSocketsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   projectScheme?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  position?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  markerColor?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -482,6 +528,8 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   updatedAt?: boolean
   projectScheme?: boolean
+  position?: boolean
+  markerColor?: boolean
   sockets?: boolean | Prisma.Project$socketsArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
@@ -494,6 +542,8 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   createdAt?: boolean
   updatedAt?: boolean
   projectScheme?: boolean
+  position?: boolean
+  markerColor?: boolean
 }, ExtArgs["result"]["project"]>
 
 export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -504,6 +554,8 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   createdAt?: boolean
   updatedAt?: boolean
   projectScheme?: boolean
+  position?: boolean
+  markerColor?: boolean
 }, ExtArgs["result"]["project"]>
 
 export type ProjectSelectScalar = {
@@ -514,9 +566,11 @@ export type ProjectSelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   projectScheme?: boolean
+  position?: boolean
+  markerColor?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectType" | "title" | "description" | "createdAt" | "updatedAt" | "projectScheme", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "projectType" | "title" | "description" | "createdAt" | "updatedAt" | "projectScheme" | "position" | "markerColor", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sockets?: boolean | Prisma.Project$socketsArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
@@ -537,6 +591,8 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     createdAt: Date
     updatedAt: Date | null
     projectScheme: runtime.JsonValue | null
+    position: runtime.JsonValue
+    markerColor: string
   }, ExtArgs["result"]["project"]>
   composites: {}
 }
@@ -968,6 +1024,8 @@ export interface ProjectFieldRefs {
   readonly createdAt: Prisma.FieldRef<"Project", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Project", 'DateTime'>
   readonly projectScheme: Prisma.FieldRef<"Project", 'Json'>
+  readonly position: Prisma.FieldRef<"Project", 'Json'>
+  readonly markerColor: Prisma.FieldRef<"Project", 'String'>
 }
     
 
@@ -1164,6 +1222,11 @@ export type ProjectFindManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Skip the first `n` Projects.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Projects.
+   */
   distinct?: Prisma.ProjectScalarFieldEnum | Prisma.ProjectScalarFieldEnum[]
 }
 

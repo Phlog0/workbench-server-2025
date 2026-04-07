@@ -1,0 +1,10 @@
+node_modules
+dist
+.git
+.env
+*.md
+.vscode
+coverage
+docker-compose*.yml
+
+test

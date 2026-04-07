@@ -40,7 +40,6 @@ export type SocketMinAggregateOutputType = {
   projectId: string | null
   joinedAt: Date | null
   leftAt: Date | null
-  isOnline: boolean | null
 }
 
 export type SocketMaxAggregateOutputType = {
@@ -49,7 +48,6 @@ export type SocketMaxAggregateOutputType = {
   projectId: string | null
   joinedAt: Date | null
   leftAt: Date | null
-  isOnline: boolean | null
 }
 
 export type SocketCountAggregateOutputType = {
@@ -58,7 +56,6 @@ export type SocketCountAggregateOutputType = {
   projectId: number
   joinedAt: number
   leftAt: number
-  isOnline: number
   _all: number
 }
 
@@ -77,7 +74,6 @@ export type SocketMinAggregateInputType = {
   projectId?: true
   joinedAt?: true
   leftAt?: true
-  isOnline?: true
 }
 
 export type SocketMaxAggregateInputType = {
@@ -86,7 +82,6 @@ export type SocketMaxAggregateInputType = {
   projectId?: true
   joinedAt?: true
   leftAt?: true
-  isOnline?: true
 }
 
 export type SocketCountAggregateInputType = {
@@ -95,7 +90,6 @@ export type SocketCountAggregateInputType = {
   projectId?: true
   joinedAt?: true
   leftAt?: true
-  isOnline?: true
   _all?: true
 }
 
@@ -191,7 +185,6 @@ export type SocketGroupByOutputType = {
   projectId: string | null
   joinedAt: Date | null
   leftAt: Date | null
-  isOnline: boolean
   _count: SocketCountAggregateOutputType | null
   _avg: SocketAvgAggregateOutputType | null
   _sum: SocketSumAggregateOutputType | null
@@ -223,7 +216,6 @@ export type SocketWhereInput = {
   projectId?: Prisma.StringNullableFilter<"Socket"> | string | null
   joinedAt?: Prisma.DateTimeNullableFilter<"Socket"> | Date | string | null
   leftAt?: Prisma.DateTimeNullableFilter<"Socket"> | Date | string | null
-  isOnline?: Prisma.BoolFilter<"Socket"> | boolean
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null
 }
@@ -234,7 +226,6 @@ export type SocketOrderByWithRelationInput = {
   projectId?: Prisma.SortOrderInput | Prisma.SortOrder
   joinedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   leftAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  isOnline?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   project?: Prisma.ProjectOrderByWithRelationInput
 }
@@ -248,7 +239,6 @@ export type SocketWhereUniqueInput = Prisma.AtLeast<{
   projectId?: Prisma.StringNullableFilter<"Socket"> | string | null
   joinedAt?: Prisma.DateTimeNullableFilter<"Socket"> | Date | string | null
   leftAt?: Prisma.DateTimeNullableFilter<"Socket"> | Date | string | null
-  isOnline?: Prisma.BoolFilter<"Socket"> | boolean
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null
 }, "id">
@@ -259,7 +249,6 @@ export type SocketOrderByWithAggregationInput = {
   projectId?: Prisma.SortOrderInput | Prisma.SortOrder
   joinedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   leftAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  isOnline?: Prisma.SortOrder
   _count?: Prisma.SocketCountOrderByAggregateInput
   _avg?: Prisma.SocketAvgOrderByAggregateInput
   _max?: Prisma.SocketMaxOrderByAggregateInput
@@ -276,14 +265,12 @@ export type SocketScalarWhereWithAggregatesInput = {
   projectId?: Prisma.StringNullableWithAggregatesFilter<"Socket"> | string | null
   joinedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Socket"> | Date | string | null
   leftAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Socket"> | Date | string | null
-  isOnline?: Prisma.BoolWithAggregatesFilter<"Socket"> | boolean
 }
 
 export type SocketCreateInput = {
   id: string
   joinedAt?: Date | string | null
   leftAt?: Date | string | null
-  isOnline?: boolean
   user: Prisma.UserCreateNestedOneWithoutSocketInput
   project?: Prisma.ProjectCreateNestedOneWithoutSocketsInput
 }
@@ -294,14 +281,12 @@ export type SocketUncheckedCreateInput = {
   projectId?: string | null
   joinedAt?: Date | string | null
   leftAt?: Date | string | null
-  isOnline?: boolean
 }
 
 export type SocketUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutSocketNestedInput
   project?: Prisma.ProjectUpdateOneWithoutSocketsNestedInput
 }
@@ -312,7 +297,6 @@ export type SocketUncheckedUpdateInput = {
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SocketCreateManyInput = {
@@ -321,14 +305,12 @@ export type SocketCreateManyInput = {
   projectId?: string | null
   joinedAt?: Date | string | null
   leftAt?: Date | string | null
-  isOnline?: boolean
 }
 
 export type SocketUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SocketUncheckedUpdateManyInput = {
@@ -337,7 +319,6 @@ export type SocketUncheckedUpdateManyInput = {
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SocketListRelationFilter = {
@@ -356,7 +337,6 @@ export type SocketCountOrderByAggregateInput = {
   projectId?: Prisma.SortOrder
   joinedAt?: Prisma.SortOrder
   leftAt?: Prisma.SortOrder
-  isOnline?: Prisma.SortOrder
 }
 
 export type SocketAvgOrderByAggregateInput = {
@@ -369,7 +349,6 @@ export type SocketMaxOrderByAggregateInput = {
   projectId?: Prisma.SortOrder
   joinedAt?: Prisma.SortOrder
   leftAt?: Prisma.SortOrder
-  isOnline?: Prisma.SortOrder
 }
 
 export type SocketMinOrderByAggregateInput = {
@@ -378,7 +357,6 @@ export type SocketMinOrderByAggregateInput = {
   projectId?: Prisma.SortOrder
   joinedAt?: Prisma.SortOrder
   leftAt?: Prisma.SortOrder
-  isOnline?: Prisma.SortOrder
 }
 
 export type SocketSumOrderByAggregateInput = {
@@ -473,7 +451,6 @@ export type SocketCreateWithoutProjectInput = {
   id: string
   joinedAt?: Date | string | null
   leftAt?: Date | string | null
-  isOnline?: boolean
   user: Prisma.UserCreateNestedOneWithoutSocketInput
 }
 
@@ -482,7 +459,6 @@ export type SocketUncheckedCreateWithoutProjectInput = {
   userId: number
   joinedAt?: Date | string | null
   leftAt?: Date | string | null
-  isOnline?: boolean
 }
 
 export type SocketCreateOrConnectWithoutProjectInput = {
@@ -520,14 +496,12 @@ export type SocketScalarWhereInput = {
   projectId?: Prisma.StringNullableFilter<"Socket"> | string | null
   joinedAt?: Prisma.DateTimeNullableFilter<"Socket"> | Date | string | null
   leftAt?: Prisma.DateTimeNullableFilter<"Socket"> | Date | string | null
-  isOnline?: Prisma.BoolFilter<"Socket"> | boolean
 }
 
 export type SocketCreateWithoutUserInput = {
   id: string
   joinedAt?: Date | string | null
   leftAt?: Date | string | null
-  isOnline?: boolean
   project?: Prisma.ProjectCreateNestedOneWithoutSocketsInput
 }
 
@@ -536,7 +510,6 @@ export type SocketUncheckedCreateWithoutUserInput = {
   projectId?: string | null
   joinedAt?: Date | string | null
   leftAt?: Date | string | null
-  isOnline?: boolean
 }
 
 export type SocketCreateOrConnectWithoutUserInput = {
@@ -570,14 +543,12 @@ export type SocketCreateManyProjectInput = {
   userId: number
   joinedAt?: Date | string | null
   leftAt?: Date | string | null
-  isOnline?: boolean
 }
 
 export type SocketUpdateWithoutProjectInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   user?: Prisma.UserUpdateOneRequiredWithoutSocketNestedInput
 }
 
@@ -586,7 +557,6 @@ export type SocketUncheckedUpdateWithoutProjectInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SocketUncheckedUpdateManyWithoutProjectInput = {
@@ -594,7 +564,6 @@ export type SocketUncheckedUpdateManyWithoutProjectInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SocketCreateManyUserInput = {
@@ -602,14 +571,12 @@ export type SocketCreateManyUserInput = {
   projectId?: string | null
   joinedAt?: Date | string | null
   leftAt?: Date | string | null
-  isOnline?: boolean
 }
 
 export type SocketUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
   project?: Prisma.ProjectUpdateOneWithoutSocketsNestedInput
 }
 
@@ -618,7 +585,6 @@ export type SocketUncheckedUpdateWithoutUserInput = {
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type SocketUncheckedUpdateManyWithoutUserInput = {
@@ -626,7 +592,6 @@ export type SocketUncheckedUpdateManyWithoutUserInput = {
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   leftAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  isOnline?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -637,7 +602,6 @@ export type SocketSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   projectId?: boolean
   joinedAt?: boolean
   leftAt?: boolean
-  isOnline?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   project?: boolean | Prisma.Socket$projectArgs<ExtArgs>
 }, ExtArgs["result"]["socket"]>
@@ -648,7 +612,6 @@ export type SocketSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   projectId?: boolean
   joinedAt?: boolean
   leftAt?: boolean
-  isOnline?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   project?: boolean | Prisma.Socket$projectArgs<ExtArgs>
 }, ExtArgs["result"]["socket"]>
@@ -659,7 +622,6 @@ export type SocketSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   projectId?: boolean
   joinedAt?: boolean
   leftAt?: boolean
-  isOnline?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   project?: boolean | Prisma.Socket$projectArgs<ExtArgs>
 }, ExtArgs["result"]["socket"]>
@@ -670,10 +632,9 @@ export type SocketSelectScalar = {
   projectId?: boolean
   joinedAt?: boolean
   leftAt?: boolean
-  isOnline?: boolean
 }
 
-export type SocketOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "projectId" | "joinedAt" | "leftAt" | "isOnline", ExtArgs["result"]["socket"]>
+export type SocketOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "projectId" | "joinedAt" | "leftAt", ExtArgs["result"]["socket"]>
 export type SocketInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   project?: boolean | Prisma.Socket$projectArgs<ExtArgs>
@@ -699,7 +660,6 @@ export type $SocketPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     projectId: string | null
     joinedAt: Date | null
     leftAt: Date | null
-    isOnline: boolean
   }, ExtArgs["result"]["socket"]>
   composites: {}
 }
@@ -1130,7 +1090,6 @@ export interface SocketFieldRefs {
   readonly projectId: Prisma.FieldRef<"Socket", 'String'>
   readonly joinedAt: Prisma.FieldRef<"Socket", 'DateTime'>
   readonly leftAt: Prisma.FieldRef<"Socket", 'DateTime'>
-  readonly isOnline: Prisma.FieldRef<"Socket", 'Boolean'>
 }
     
 
@@ -1327,6 +1286,11 @@ export type SocketFindManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Skip the first `n` Sockets.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Sockets.
+   */
   distinct?: Prisma.SocketScalarFieldEnum | Prisma.SocketScalarFieldEnum[]
 }
 

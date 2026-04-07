@@ -1,43 +1,66 @@
-import { ProjectType } from "@prisma/client";
-import { IsDate, IsIn, IsNotEmpty, IsOptional, IsString, ValidateNested } from "class-validator";
+import { ProjectType } from "@/generated/prisma/enums";
+import {
+    IsDate,
+    IsIn,
+    IsNotEmpty,
+    IsNumber,
+    IsObject,
+    IsOptional,
+    IsString,
+    ValidateNested,
+} from "class-validator";
 import { Type } from "class-transformer";
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
+import { MapPositionDto } from "./map-position.dto";
+
 export class CreateProjectDto {
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty({
-    type: String,
-    example: "ТП-10 кВ",
-  })
-  title: string;
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty({
+        type: String,
+        example: "ТП-10 кВ",
+    })
+    title: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty({
-    type: String,
-    example: "Трансформаторная подстанция, находящаяся в где-то ХМАО",
-  })
-  description: string;
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty({
+        type: String,
+        example: "Трансформаторная подстанция, находящаяся в где-то ХМАО",
+    })
+    description: string;
 
-  @IsIn(["ТП", "РП", "КТП"])
-  @ApiProperty({ enum: ProjectType, example: ProjectType.КТП })
-  projectType: ProjectType;
+    @IsIn(["ТП", "РП", "КТП"])
+    @ApiProperty({ enum: ProjectType, example: ProjectType.КТП })
+    projectType: ProjectType;
 
-  @IsOptional()
-  @IsDate()
-  @ApiPropertyOptional({ type: Date, example: new Date() })
-  createdAt?: Date;
-  @IsOptional()
-  @IsDate()
-  @ApiPropertyOptional({ type: Date, example: new Date() })
-  updatedAt?: Date;
+    @IsOptional()
+    @IsDate()
+    @ApiPropertyOptional({ type: Date, example: new Date() })
+    createdAt?: Date;
+    @IsOptional()
+    @IsDate()
+    @ApiPropertyOptional({ type: Date, example: new Date() })
+    updatedAt?: Date;
 
-  @IsOptional()
-  @IsString()
-  @ApiPropertyOptional({ type: String, example: "Создай проект с 4 ячейками по 35 кВ" })
-  prompt?: string;
-  // @IsOptional()
-  // @ValidateNested() // <-- ВАЖНО: указываем, что объект вложенный
-  // @Type(() => SchemeDto) // <-- ВАЖНО: указываем тип для преобразования
-  // projectScheme: SchemeDto;
+    @IsOptional()
+    @IsString()
+    @ApiPropertyOptional({ type: String, example: "Создай проект с 4 ячейками по 35 кВ" })
+    prompt?: string;
+    @ApiProperty({ type: MapPositionDto, example: { type: MapPositionDto } })
+    @IsObject()
+    @ValidateNested()
+    @Type(() => MapPositionDto)
+    position: MapPositionDto;
+
+    @IsString()
+    @ApiProperty({
+        type: String,
+        example: "blue",
+    })
+    markerColor: string;
+    // @IsOptional()
+    // @ValidateNested() // <-- ВАЖНО: указываем, что объект вложенный
+    // @Type(() => SchemeDto) // <-- ВАЖНО: указываем тип для преобразования
+    // projectScheme: SchemeDto;
 }

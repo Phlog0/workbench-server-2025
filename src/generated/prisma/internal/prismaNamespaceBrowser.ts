@@ -81,7 +81,9 @@ export const ProjectScalarFieldEnum = {
   description: 'description',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  projectScheme: 'projectScheme'
+  projectScheme: 'projectScheme',
+  position: 'position',
+  markerColor: 'markerColor'
 } as const
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
@@ -106,8 +108,7 @@ export const SocketScalarFieldEnum = {
   userId: 'userId',
   projectId: 'projectId',
   joinedAt: 'joinedAt',
-  leftAt: 'leftAt',
-  isOnline: 'isOnline'
+  leftAt: 'leftAt'
 } as const
 
 export type SocketScalarFieldEnum = (typeof SocketScalarFieldEnum)[keyof typeof SocketScalarFieldEnum]
@@ -145,6 +146,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

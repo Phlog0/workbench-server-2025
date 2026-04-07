@@ -1,5 +1,5 @@
 export class CreateSavePdfDto {
-  name: string;
-  email: string;
-  age: number;
+    name: string;
+    email: string;
+    age: number;
 }

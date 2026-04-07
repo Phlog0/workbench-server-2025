@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.4.2
- * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
+ * Prisma Client JS version: 7.5.0
+ * Query Engine version: 280c870be64f457428992c43c1f6d557fab6e29e
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.4.2",
-  engine: "94a226be1cf2967af2541cca5529f0f7ba866919"
+  client: "7.5.0",
+  engine: "280c870be64f457428992c43c1f6d557fab6e29e"
 }
 
 /**
@@ -824,7 +824,9 @@ export const ProjectScalarFieldEnum = {
   description: 'description',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  projectScheme: 'projectScheme'
+  projectScheme: 'projectScheme',
+  position: 'position',
+  markerColor: 'markerColor'
 } as const
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
@@ -849,8 +851,7 @@ export const SocketScalarFieldEnum = {
   userId: 'userId',
   projectId: 'projectId',
   joinedAt: 'joinedAt',
-  leftAt: 'leftAt',
-  isOnline: 'isOnline'
+  leftAt: 'leftAt'
 } as const
 
 export type SocketScalarFieldEnum = (typeof SocketScalarFieldEnum)[keyof typeof SocketScalarFieldEnum]
@@ -888,6 +889,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

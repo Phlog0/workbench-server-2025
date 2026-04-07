@@ -5,10 +5,10 @@ import { SkipAuth } from "@/auth/decorators/skip-auth.decorator";
 @SkipAuth()
 @Controller("ai")
 export class AiController {
-  constructor(private readonly aiService: AiService) {}
+    constructor(private readonly aiService: AiService) {}
 
-  @Post()
-  create(@Body() createAiDto: CreateAiDto) {
-    return this.aiService.create(createAiDto.prompt);
-  }
+    @Post()
+    create(@Body() createAiDto: CreateAiDto) {
+        return this.aiService.create(createAiDto.prompt);
+    }
 }
