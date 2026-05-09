@@ -1,0 +1,100 @@
+// 1. Discover Docker containers
+discovery.docker "containers" {
+    host = "unix:///var/run/docker.sock"
+}
+
+// 2. Extract service name from container name
+discovery.relabel "docker_containers" {
+    targets = discovery.docker.containers.targets
+
+    rule {
+        source_labels = ["__meta_docker_container_name"]
+        regex         = "/(.*)"
+        target_label  = "service_name"
+    }
+}
+
+// 3. Collect logs from Docker
+loki.source.docker "default" {
+    host           = "unix:///var/run/docker.sock"
+    targets        = discovery.relabel.docker_containers.output
+    labels         = { "collector" = "alloy" }
+    forward_to     = [loki.process.pino_json.receiver]
+}
+
+// 4. Process Pino JSON logs
+loki.process "pino_json" {
+    // Stage 1: Parse JSON fields
+    stage.json {
+        expressions = {
+            // Basic fields from Pino
+            level        = "level",
+            msg          = "msg",
+            time         = "time",
+            pid          = "pid",
+            hostname     = "hostname",
+            responseTime = "responseTime",
+            
+            // Request fields (nested in req)
+            method       = "req.method",
+            url          = "req.url",
+            req_id       = "req.id",
+            user_agent   = "req.headers.user-agent",
+            content_type = "req.headers.content-type",
+            
+            // Response fields (nested in res)
+            status       = "res.statusCode",
+            
+            // Error fields (if present)
+            err_type     = "err.type",
+            err_message  = "err.message",
+            err_stack    = "err.stack",
+            err_code     = "err.code",
+        }
+    }
+    
+    // Stage 2: Convert Pino numeric level to readable string
+    stage.template {
+        source   = "level"
+        template = "{{ get (dict \"10\" \"trace\" \"20\" \"debug\" \"30\" \"info\" \"40\" \"warn\" \"50\" \"error\" \"60\" \"fatal\") .level }}"
+    }
+    
+    // Stage 3: Set Loki labels (low cardinality fields - use for filtering)
+    stage.labels {
+        values = {
+            level        = "",   // info, warn, error
+            method       = "",   // GET, POST, PUT, DELETE
+            status       = "",   // 200, 201, 400, 404, 500
+            service_name = "",   // from discovery.relabel
+        }
+    }
+    
+    // Stage 4: Set structured metadata (high cardinality fields - for Loki 3.0+)
+    stage.structured_metadata {
+        values = {
+            pid          = "",   // Process ID
+            hostname     = "",   // Host name
+            responseTime = "",   // Response time in ms
+            url          = "",   // Full URL path
+            req_id       = "",   // Request ID for tracing
+            user_agent   = "",   // User agent string
+            content_type = "",   // Content type header
+            err_type     = "",   // Error type if present
+            err_code     = "",   // Error code if present
+        }
+    }
+    
+    // Stage 5: Clean up log line - keep only the message
+    stage.output {
+        source = "msg"
+    }
+    
+    forward_to = [loki.write.local.receiver]
+}
+
+// 5. Write to Loki
+loki.write "local" {
+    endpoint {
+        url = "http://loki:3100/loki/api/v1/push"
+    }
+}

@@ -4,15 +4,20 @@ import { GetDictionaryDataModule } from "./get-dictionary-data/get-dictionary-da
 import { AuthModule } from "./auth/auth.module";
 import { APP_GUARD } from "@nestjs/core";
 import { AuthGuard } from "./auth/auth.guard";
-// import { SkipAuth } from "./auth/decorators/skip-auth.decorator";
 import { SavePdfModule } from "./save-pdf/save-pdf.module";
 import { MailerModule } from "@nestjs-modules/mailer";
 import { AiModule } from "./ai/ai.module";
 import { ConfigModule } from "@nestjs/config";
 import { SocketEventsModule } from "./socket-events/socket-events.module";
+import { PrometheusModule } from "@willsoto/nestjs-prometheus";
+import { AppController } from "./app.controller";
+import { pinoConfig } from "./pino.config";
+import { LoggerModule } from "nestjs-pino";
 
 @Module({
     imports: [
+        LoggerModule.forRootAsync(pinoConfig),
+        PrometheusModule.register(),
         MailerModule.forRoot({
             transport: {
                 host: process.env.EMAIL_SERVER,
@@ -22,9 +27,6 @@ import { SocketEventsModule } from "./socket-events/socket-events.module";
                     user: process.env.EMAIL_USER,
                     pass: process.env.EMAIL_PASSWORD,
                 },
-            },
-            defaults: {
-                from: '"nest-modules" <modules@nestjs.com>',
             },
         }),
 
@@ -39,12 +41,18 @@ import { SocketEventsModule } from "./socket-events/socket-events.module";
         }),
         SocketEventsModule,
     ],
-    controllers: [],
+
+    controllers: [AppController],
     providers: [
         {
             provide: APP_GUARD,
             useClass: AuthGuard,
         },
+        // makeCounterProvider({
+        //     name: "DEFGH_COUNTER",
+        //     help: "metric_help",
+        //     labelNames: ["endpoint"],
+        // }),
     ],
 })
 export class AppModule {}

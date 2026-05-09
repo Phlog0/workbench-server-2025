@@ -5,6 +5,7 @@ import { QueryParametersGetDictionary } from "./dto/query-parameters-get-diction
 import { RFNodeTypesValues } from "@/shared/rf-nodes-types";
 import { PossibleFilename } from "@/@types";
 import { SkipAuth } from "@/auth/decorators/skip-auth.decorator";
+import { dictoinariesRequestCounter } from "@/metrics";
 // @SkipAuth()
 @Controller("getReadySolutionsList")
 // @Controller("api/get-dictionary-data")
@@ -18,6 +19,7 @@ export class GetDictionaryDataController {
         @Param("fileName") fileName: PossibleFilename,
         @Query() queryParams: QueryParametersGetDictionary,
     ) {
+        dictoinariesRequestCounter.inc();
         const dictionaryData = this.getDictionaryDataService.getDictionaryData(
             typeFolder,
             fileName,

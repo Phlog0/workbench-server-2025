@@ -1,0 +1,126 @@
+services:
+    db:
+        image: postgres:16
+        restart: always
+        environment:
+            POSTGRES_USER: myuser
+            POSTGRES_PASSWORD: mypassword
+            POSTGRES_DB: workbench_2025_db
+        ports:
+            - "54322:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U myuser -d workbench_2025_db"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
+
+    adminer:
+        image: adminer:latest
+        ports:
+            - "8080:8080"
+        depends_on:
+            - db
+        restart: unless-stopped
+
+    server-db-migrate:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: builder
+        command: sh -c "npx prisma migrate deploy && npx prisma generate"
+        environment:
+            DATABASE_URL: "postgresql://myuser:mypassword@db:5432/workbench_2025_db?schema=public"
+        depends_on:
+            db:
+                condition: service_healthy
+
+    server:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: production
+        ports:
+            - "3000:3000"
+        env_file:
+            - .env.docker
+        depends_on:
+            db:
+                condition: service_healthy
+            server-db-migrate:
+                condition: service_completed_successfully # Ждем успешного завершения миграций!
+            loki:
+                condition: service_started
+            prometheus:
+                condition: service_started
+        restart: unless-stopped
+
+    loki:
+        image: grafana/loki:3.0.0
+        ports:
+            - "3100:3100"
+        volumes:
+            - ./monitoring/loki-config.yaml:/etc/loki/local-config.yaml
+            - loki_data:/loki
+        command: -config.file=/etc/loki/local-config.yaml
+        healthcheck:
+            test: ["CMD-SHELL", "wget -q --tries=1 -O- http://loki:3100/ready"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        restart: unless-stopped
+
+    prometheus:
+        image: prom/prometheus:v2.47.0
+        ports:
+            - "9090:9090"
+        volumes:
+            - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+        command:
+            - "--config.file=/etc/prometheus/prometheus.yml"
+            - --web.enable-remote-write-receiver
+
+    alloy:
+        image: grafana/alloy:latest
+        volumes:
+            - ./monitoring/config.alloy:/etc/alloy/config.alloy
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+        command:
+            - run
+            - --server.http.listen-addr=0.0.0.0:12345
+            - --storage.path=/var/lib/alloy/data
+            - /etc/alloy/config.alloy
+        ports:
+            - "12345:12345"
+        depends_on:
+            - loki
+            - prometheus
+
+    grafana:
+        image: grafana/grafana:11.0.0
+        ports:
+            - "3001:3000"
+        environment:
+            - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+            - GF_SECURITY_ADMIN_USER=admin
+            - GF_SECURITY_ADMIN_PASSWORD=admin
+        volumes:
+            - grafana-storage:/var/lib/grafana
+            # Монтируем ПАПКУ, а не файл
+            - ./monitoring/datasources:/etc/grafana/provisioning/datasources
+        depends_on:
+            - loki
+            - prometheus
+            - alloy
+        healthcheck:
+            test: ["CMD-SHELL", "wget -q --tries=1 -O- http://grafana:3000/api/health"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        restart: unless-stopped
+
+volumes:
+    postgres_data:
+    grafana-storage:
+    loki_data:

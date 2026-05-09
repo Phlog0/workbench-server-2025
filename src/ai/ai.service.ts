@@ -8,12 +8,15 @@ export class AiService {
     constructor(private readonly httpService: HttpService) {}
     async create(prompt: string) {
         try {
+            const url = process.env.AI_SERVER_URL;
+
             const response = await lastValueFrom(
-                this.httpService.post("/generate", {
-                    prompt,
+                this.httpService.post(`${url}/generate`, {
+                    text: prompt,
+                    max_nodes: 13,
                 }),
             );
-            // await this.projectsService.createProject({});
+
             return response.data;
         } catch (error) {
             if (isAxiosError(error) && !error.response) {
@@ -41,6 +44,7 @@ export class AiService {
                     HttpStatus.BAD_REQUEST,
                 );
             }
+            console.log(error);
             throw new HttpException(
                 "Критическая ошибка при обработке запроса",
                 HttpStatus.INTERNAL_SERVER_ERROR,

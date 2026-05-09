@@ -7,7 +7,6 @@ import { HttpModule } from "@nestjs/axios";
         HttpModule.register({
             timeout: 5000,
             maxRedirects: 5,
-            baseURL: "http://localhost:5000",
             headers: {
                 "Content-Type": "application/json",
             },
