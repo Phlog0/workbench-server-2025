@@ -1,54 +1,27 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { PrismaService } from "../prisma.service";
-import { AiService } from "@/ai/ai.service";
-import { Project } from "@/generated/prisma/client";
+import { UpdateProjectDto } from "./dto/update-project.dto";
+import { SchemeDataDto } from "./dto/scheme.dto";
+import { MapPositionDto } from "./dto/map-position.dto";
 
-interface ProjectWithParsedPosition extends Omit<Project, "position"> {
-    position: { lat: number; lng: number };
-}
 @Injectable()
 export class ProjectsService {
-    constructor(
-        private readonly prismaService: PrismaService,
-        private readonly aiService: AiService,
-    ) {}
+    constructor(private readonly prismaService: PrismaService) {}
 
     async createProject(createProjectDto: CreateProjectDto) {
-        try {
-            if (createProjectDto.prompt) {
-                const scheme = await this.aiService.create(createProjectDto.prompt);
-                const newProject = await this.prismaService.project.create({
-                    data: {
-                        description: createProjectDto.description,
-                        title: createProjectDto.title,
-                        projectScheme: scheme,
-                        projectType: createProjectDto.projectType,
-                        createdAt: createProjectDto.createdAt,
-                        updatedAt: createProjectDto.updatedAt,
-                        position: JSON.stringify(createProjectDto.position),
-                        markerColor: createProjectDto.markerColor,
-                    },
-                });
-                return { newProject: newProject };
-            } else {
-                const newProject = await this.prismaService.project.create({
-                    data: {
-                        description: createProjectDto.description,
-                        title: createProjectDto.title,
-                        projectType: createProjectDto.projectType,
-                        createdAt: createProjectDto.createdAt,
-                        updatedAt: createProjectDto.updatedAt,
-                        position: JSON.stringify(createProjectDto.position),
-                        markerColor: createProjectDto.markerColor,
-                    },
-                });
-                return { newProject: newProject };
-            }
-        } catch (error) {
-            console.error("Prisma error:", error);
-            throw new Error("Ошибка при создании проекта");
-        }
+        const newProject = await this.prismaService.project.create({
+            data: {
+                description: createProjectDto.description,
+                title: createProjectDto.title,
+                projectType: createProjectDto.projectType,
+                createdAt: createProjectDto.createdAt,
+                updatedAt: createProjectDto.updatedAt,
+                position: JSON.stringify(createProjectDto.position),
+                markerColor: createProjectDto.markerColor,
+            },
+        });
+        return { newProject };
     }
 
     async findAllProjects() {
@@ -57,7 +30,7 @@ export class ProjectsService {
         });
         return projects.map((project) => ({
             ...project,
-            position: project.position ? JSON.parse(project.position as string) : null,
+            position: JSON.parse(project.position as string) as MapPositionDto,
         }));
     }
 
@@ -93,8 +66,10 @@ export class ProjectsService {
         return projectScheme;
     }
 
-    async updateProject(id: string, updateProjectDto: any) {
-        const findProject = await this.prismaService.project.findUnique({ where: { id } });
+    async updateProject(id: string, dto: UpdateProjectDto) {
+        const findProject = await this.prismaService.project.findUnique({
+            where: { id },
+        });
         if (!findProject) {
             throw new NotFoundException("Проект не найден");
         }
@@ -104,7 +79,13 @@ export class ProjectsService {
                 id,
             },
 
-            data: updateProjectDto,
+            data: {
+                markerColor: dto.markerColor,
+                position: JSON.stringify(dto.position),
+                projectType: dto.projectType,
+                title: dto.title,
+                description: dto.description,
+            },
         });
         if (!updatedProject) {
             throw new NotFoundException("Проект не найден");
@@ -113,8 +94,10 @@ export class ProjectsService {
         return { message: `Данные проекта ${id} успешно обновлены` };
     }
 
-    async updateProjectScheme(id: string, updateProjectDto: any) {
-        const findProject = await this.prismaService.project.findUnique({ where: { id } });
+    async updateProjectScheme(id: string, dto: SchemeDataDto) {
+        const findProject = await this.prismaService.project.findUnique({
+            where: { id },
+        });
         if (!findProject) {
             throw new NotFoundException("Проект не найден");
         }
@@ -122,14 +105,16 @@ export class ProjectsService {
             where: {
                 id,
             },
-            data: { projectScheme: updateProjectDto },
+            data: { projectScheme: JSON.stringify(dto) },
         });
 
         return { message: `Данные проекта ${id} успешно обновлены` };
     }
 
     async removeProject(id: string) {
-        const findProject = await this.prismaService.project.findUnique({ where: { id } });
+        const findProject = await this.prismaService.project.findUnique({
+            where: { id },
+        });
         if (!findProject) {
             throw new NotFoundException("Проект не найден");
         }

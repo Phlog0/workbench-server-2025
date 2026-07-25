@@ -9,21 +9,21 @@
         "target": "ES2021",
         "sourceMap": true,
         "outDir": "./dist",
-        "rootDir": "./src",
-        "allowJs": true,
-        // "baseUrl": "./",
+        "rootDir": "./",
         "skipLibCheck": true,
-        "strictNullChecks": false,
-        "noImplicitAny": false,
-        "strictBindCallApply": false,
-        "forceConsistentCasingInFileNames": false,
-        "noFallthroughCasesInSwitch": false,
+        "strictNullChecks": true,
+        "noFallthroughCasesInSwitch": true,
+        "forceConsistentCasingInFileNames": true,
+        "strictPropertyInitialization": false,
+        "noImplicitAny": true,
         "paths": {
             "@/*": ["./src/*"]
-        }
+        },
+        "types": ["jest"]
     },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules", "test", "dist", "**/*.spec.ts"],
+
+    // "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist"],
 
     "ts-node": {
         "compilerOptions": {

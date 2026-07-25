@@ -3,7 +3,6 @@ import {
     IsDate,
     IsIn,
     IsNotEmpty,
-    IsNumber,
     IsObject,
     IsOptional,
     IsString,
@@ -45,7 +44,10 @@ export class CreateProjectDto {
 
     @IsOptional()
     @IsString()
-    @ApiPropertyOptional({ type: String, example: "Создай проект с 4 ячейками по 35 кВ" })
+    @ApiPropertyOptional({
+        type: String,
+        example: "Создай проект с 4 ячейками по 35 кВ",
+    })
     prompt?: string;
     @ApiProperty({ type: MapPositionDto, example: { type: MapPositionDto } })
     @IsObject()

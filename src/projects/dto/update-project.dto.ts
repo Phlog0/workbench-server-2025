@@ -1,6 +1,8 @@
 import { ProjectType } from "@/generated/prisma/enums";
-import { IsIn, IsNotEmpty, IsString } from "class-validator";
+import { IsIn, IsNotEmpty, IsString, ValidateNested } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
+import { MapPositionDto } from "./map-position.dto";
+import { Type } from "class-transformer";
 
 export class UpdateProjectDto {
     @IsString()
@@ -29,4 +31,8 @@ export class UpdateProjectDto {
         example: "blue",
     })
     markerColor: string;
+
+    @ValidateNested()
+    @Type(() => MapPositionDto)
+    position: MapPositionDto;
 }

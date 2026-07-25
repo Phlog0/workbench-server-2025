@@ -6,16 +6,13 @@ import {
     Patch,
     Param,
     Delete,
-    HttpException,
-    HttpStatus,
-    ParseIntPipe,
-    HttpCode,
 } from "@nestjs/common";
 import { ProjectsService } from "./projects.service";
 import { CreateProjectDto } from "./dto/create-project.dto";
 import { ApiCreatedResponse, ApiTags } from "@nestjs/swagger";
 import { CreatedProjectResponse } from "./dto/created-project-response.dto";
 import { UpdateProjectDto } from "./dto/update-project.dto";
+import { SchemeDataDto } from "./dto/scheme.dto";
 @ApiTags("projects")
 @Controller("projects")
 export class ProjectsController {
@@ -43,17 +40,19 @@ export class ProjectsController {
     }
 
     @Patch(":id")
-    async update(@Param("id") id: string, @Body() updateProjectDto: UpdateProjectDto) {
+    async update(
+        @Param("id") id: string,
+        @Body() updateProjectDto: UpdateProjectDto,
+    ) {
         return await this.projectsService.updateProject(id, updateProjectDto);
     }
     @Patch("/project-scheme/:id")
     async updateProjectScheme(
         @Param("id") id: string,
-        //TODO !! ZOD-парсер!
-        // {nodes:[], edges:[], viewport:{}}
-        @Body() updateProjectDto: any,
+
+        @Body() dto: SchemeDataDto,
     ) {
-        return await this.projectsService.updateProjectScheme(id, updateProjectDto);
+        return await this.projectsService.updateProjectScheme(id, dto);
     }
 
     @Delete(":id")

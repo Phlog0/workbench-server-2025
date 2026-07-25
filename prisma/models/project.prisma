@@ -1,0 +1,16 @@
+model Project {
+  id            String      @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  projectType   ProjectType @default(КТП) @map("project_type")
+  title         String
+  description   String
+
+  projectScheme Json? @map("project_scheme")
+//  sockets       Socket[]
+  position      Json // { lat: number; lng: number}
+  markerColor   String @map("marker_color")
+
+  @@map("project")
+}

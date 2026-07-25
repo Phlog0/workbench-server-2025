@@ -2,10 +2,10 @@ import { utils, WorkBook } from "xlsx";
 
 import { NotFoundException } from "@nestjs/common";
 import { TableResult } from "../types";
-import { FilenameForTablePt1004Kv } from "@/@types";
+import { PossibleFilenameTable } from "@/@types";
 
 export const pt1004KvTableResult = (
-    fileName: FilenameForTablePt1004Kv,
+    fileName: PossibleFilenameTable,
     wb: WorkBook,
     firstSheetName: string,
 ): TableResult => {

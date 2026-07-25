@@ -5,11 +5,11 @@ import { FilenameForTableCell04Kv } from "@/@types";
 import { TableResult } from "../types";
 
 export const cell04KvTableResult = (
-    fileName: FilenameForTableCell04Kv,
+    filename: FilenameForTableCell04Kv,
     wb: WorkBook,
     firstSheetName: string,
 ): TableResult => {
-    switch (fileName) {
+    switch (filename) {
         case "ammeter":
             return utils.sheet_to_json(wb.Sheets[firstSheetName], {
                 defval: defaultSheetCellValue,
@@ -62,7 +62,13 @@ export const cell04KvTableResult = (
         case "switch":
             return utils.sheet_to_json(wb.Sheets[firstSheetName], {
                 defval: defaultSheetCellValue,
-                header: ["manufacturer", "title", "type", "ratedCurrent", "additionalFunctions"],
+                header: [
+                    "manufacturer",
+                    "title",
+                    "type",
+                    "ratedCurrent",
+                    "additionalFunctions",
+                ],
             });
 
         default:

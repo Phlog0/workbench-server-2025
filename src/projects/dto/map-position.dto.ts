@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsNotEmpty, IsIn, IsNumber } from "class-validator";
+import { IsNumber } from "class-validator";
 
 export class MapPositionDto {
     @IsNumber()

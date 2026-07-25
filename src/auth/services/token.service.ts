@@ -2,7 +2,7 @@ import { JwtService } from "@nestjs/jwt";
 import { PrismaService } from "@/prisma.service";
 import { UserDto } from "../dto/user.dto";
 import { Injectable } from "@nestjs/common";
-import { RequestUser } from "../types/types";
+import { RequestUser } from "@/@types/express";
 @Injectable()
 export class TokenService {
     constructor(
@@ -21,8 +21,10 @@ export class TokenService {
         return { accessToken, refreshToken };
     }
 
-    async saveToken(userId: number, token: string) {
-        const tokenData = await this.prismaService.refreshToken.findFirst({ where: { userId } });
+    async saveToken(userId: string, token: string) {
+        const tokenData = await this.prismaService.refreshToken.findFirst({
+            where: { userId },
+        });
         if (tokenData) {
             const updatedToken = await this.prismaService.refreshToken.update({
                 data: { token },
@@ -37,16 +39,20 @@ export class TokenService {
         return createdToken;
     }
     async removeToken(token: string) {
-        const tokenData = await this.prismaService.refreshToken.findFirst({ where: { token } });
+        const tokenData = await this.prismaService.refreshToken.findFirst({
+            where: { token },
+        });
         if (tokenData) {
-            const deletedToken = await this.prismaService.refreshToken.delete({ where: { token } });
+            const deletedToken = await this.prismaService.refreshToken.delete({
+                where: { token },
+            });
 
             return deletedToken;
         }
         console.error("Токен не найден. Нечего удалять");
     }
 
-    async validateAccessToken(token: string) {
+    validateAccessToken(token: string) {
         try {
             const userData = this.jwtService.verify<RequestUser>(token, {
                 secret: process.env.JWT_ACCESS_SECRET,
@@ -56,9 +62,9 @@ export class TokenService {
             return null;
         }
     }
-    async validateRefreshToken(token: string) {
+    validateRefreshToken(token: string) {
         try {
-            const userData = this.jwtService.verify(token, {
+            const userData = this.jwtService.verify<RequestUser>(token, {
                 secret: process.env.JWT_REFRESH_SECRET,
             });
             return userData;
@@ -68,7 +74,9 @@ export class TokenService {
     }
     async findToken(token: string) {
         try {
-            const findToken = await this.prismaService.refreshToken.findFirst({ where: { token } });
+            const findToken = await this.prismaService.refreshToken.findFirst({
+                where: { token },
+            });
             return findToken;
         } catch {
             return null;

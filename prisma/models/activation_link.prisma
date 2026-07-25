@@ -1,0 +1,11 @@
+model ActivationLink {
+  id     Int    @id @default(autoincrement())
+  user   User   @relation(fields: [userId], references: [id])
+  // можно убрать @unique у userId
+  userId String    @unique  @map("user_id")
+  link   String
+
+  @@unique([userId, link])
+
+  @@map("activation_link")
+}

@@ -4,13 +4,14 @@ import { GetDictionaryDataService } from "./get-dictionary-data.service";
 import { QueryParametersGetDictionary } from "./dto/query-parameters-get-dictionary";
 import { RFNodeTypesValues } from "@/shared/rf-nodes-types";
 import { PossibleFilename } from "@/@types";
-import { SkipAuth } from "@/auth/decorators/skip-auth.decorator";
-import { dictoinariesRequestCounter } from "@/metrics";
+// import { dictoinariesRequestCounter } from "@/metrics";
 // @SkipAuth()
 @Controller("getReadySolutionsList")
 // @Controller("api/get-dictionary-data")
 export class GetDictionaryDataController {
-    constructor(private readonly getDictionaryDataService: GetDictionaryDataService) {}
+    constructor(
+        private readonly getDictionaryDataService: GetDictionaryDataService,
+    ) {}
 
     // @SkipAuth()
     @Get(":typeFolder/:fileName")
@@ -19,7 +20,7 @@ export class GetDictionaryDataController {
         @Param("fileName") fileName: PossibleFilename,
         @Query() queryParams: QueryParametersGetDictionary,
     ) {
-        dictoinariesRequestCounter.inc();
+        // dictoinariesRequestCounter.inc();
         const dictionaryData = this.getDictionaryDataService.getDictionaryData(
             typeFolder,
             fileName,

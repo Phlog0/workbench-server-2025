@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
+import {
+    CanActivate,
+    ExecutionContext,
+    Injectable,
+    UnauthorizedException,
+} from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { Request } from "express";
 import { SKIP_AUTH_KEY } from "./decorators/skip-auth.decorator";
@@ -17,20 +22,20 @@ export class AuthGuard implements CanActivate {
         return type === "Bearer" ? token : undefined;
     }
 
-    async canActivate(context: ExecutionContext): Promise<boolean> {
-        const isPublic = this.reflector.getAllAndOverride<boolean>(SKIP_AUTH_KEY, [
-            context.getHandler(),
-            context.getClass(),
-        ]);
+    canActivate(context: ExecutionContext): boolean {
+        const isPublic = this.reflector.getAllAndOverride<boolean>(
+            SKIP_AUTH_KEY,
+            [context.getHandler(), context.getClass()],
+        );
         if (isPublic) {
             return true;
         }
-        const request = context.switchToHttp().getRequest();
+        const request = context.switchToHttp().getRequest<Request>();
         const token = this.extractTokenFromHeader(request);
 
         if (!token) throw new UnauthorizedException("Вы не авторизованы");
         try {
-            const payload = await this.tokenService.validateAccessToken(token);
+            const payload = this.tokenService.validateAccessToken(token);
             if (!payload) {
                 throw new UnauthorizedException("Вы не авторизованы");
             }

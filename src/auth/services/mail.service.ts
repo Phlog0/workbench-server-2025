@@ -4,7 +4,7 @@ import { Injectable } from "@nestjs/common";
 @Injectable()
 export class MailService {
     constructor(private readonly mailerService: MailerService) {}
-    async sendActivationLink(to: string, link: string) {
+    sendActivationLink(_to: string, _link: string) {
         try {
             // const result = await this.mailerService.sendMail({
             //   from: process.env.EMAIL_USER,

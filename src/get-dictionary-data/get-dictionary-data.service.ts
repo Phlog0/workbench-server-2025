@@ -4,7 +4,10 @@ import { QueryParametersGetDictionary } from "./dto/query-parameters-get-diction
 import { RFNodeTypesValues } from "@/shared/rf-nodes-types";
 import { PossibleFilename } from "@/@types";
 import { isFileNameList } from "@/shared/lib/get-excel-data/types/type-guards";
-import { getListData, getTableData } from "@/shared/lib/get-excel-data/get-data-from-excel";
+import {
+    getListData,
+    getTableData,
+} from "@/shared/lib/get-excel-data/get-data-from-excel";
 
 @Injectable()
 export class GetDictionaryDataService {
@@ -17,17 +20,24 @@ export class GetDictionaryDataService {
             return getListData(typeFolder, fileName);
         } else {
             const res = getTableData(typeFolder, fileName);
-            if (res !== null) {
+            if (res) {
                 const tableColumns = res.shift();
                 if (
                     (queryParams ||
-                        "measuringCurrentTransformersDeviceAccuracyClass" in queryParams) &&
+                        "measuringCurrentTransformersDeviceAccuracyClass" in
+                            queryParams) &&
                     fileName === "measuringCurrentTransformersDevice"
                 ) {
-                    const { measuringCurrentTransformersDeviceAccuracyClass } = queryParams;
+                    const measuringCurrentTransformersDeviceAccuracyClass =
+                        queryParams.measuringCurrentTransformersDeviceAccuracyClass
+                            ? +queryParams.measuringCurrentTransformersDeviceAccuracyClass
+                            : 0;
 
                     const regexPattern = new RegExp(
-                        new Array(+measuringCurrentTransformersDeviceAccuracyClass || 0)
+                        new Array(
+                            +measuringCurrentTransformersDeviceAccuracyClass ||
+                                0,
+                        )
                             .fill(".+")
                             .join("\\/"),
                     );
@@ -38,7 +48,10 @@ export class GetDictionaryDataService {
                         (item["accuracyClass"] as string).match(regexPattern),
                     );
 
-                    return { tableColumns: tableColumns, tableBody: filteredTableBody };
+                    return {
+                        tableColumns: tableColumns,
+                        tableBody: filteredTableBody,
+                    };
                 }
 
                 return { tableColumns: tableColumns, tableBody: res };

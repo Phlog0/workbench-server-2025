@@ -64,9 +64,13 @@ export function isPt3510KvFileName(
 ): fileName is FilenameForTablePt1004Kv {
     return folderType === RF_NODE_TYPES.powerTransformer3510Kv;
 }
-export function isFileNameList(fileName: PossibleFilename): fileName is PossibleFilenameList {
+export function isFileNameList(
+    fileName: PossibleFilename,
+): fileName is PossibleFilenameList {
     return fileName === "typeOfCell" || fileName === "typeOfSwitchingDevice";
 }
-export function isFileNameTable(fileName: PossibleFilename): fileName is PossibleFilenameTable {
+export function isFileNameTable(
+    fileName: PossibleFilename,
+): fileName is PossibleFilenameTable {
     return !(fileName === "typeOfCell" || fileName === "typeOfSwitchingDevice");
 }

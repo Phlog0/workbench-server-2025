@@ -1,5 +1,13 @@
 // scheme.dto.ts
-import { IsArray, IsNumber, IsObject, ValidateNested, IsOptional, Min, Max } from "class-validator";
+import {
+    IsArray,
+    IsNumber,
+    IsObject,
+    ValidateNested,
+    IsOptional,
+    Min,
+    Max,
+} from "class-validator";
 import { Type } from "class-transformer";
 import { ApiProperty } from "@nestjs/swagger";
 import { RFNodeTypesValues } from "@/shared/rf-nodes-types";
@@ -52,9 +60,9 @@ export class SchemeDataDto {
     @IsArray()
     @IsOptional()
     @ValidateNested({ each: true })
-    @Type(() => NodeDto) // или создайте отдельный DTO для нод
+    @Type(() => NodeDto)
     @ApiProperty({
-        type: [NodeDto], // Указываем массив NodeDto
+        type: [NodeDto],
         description: "Массив узлов схемы",
         example: [
             {
@@ -69,7 +77,7 @@ export class SchemeDataDto {
     @IsArray()
     @IsOptional()
     @ValidateNested({ each: true })
-    @Type(() => EdgeDto) // или создайте отдельный DTO для ребер
+    @Type(() => EdgeDto)
     @ApiProperty({
         example: {
             id: "edge-1",

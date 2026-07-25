@@ -16,7 +16,13 @@ import { TokenService } from "./services/token.service";
         }),
     ],
     controllers: [AuthController],
-    providers: [AuthService, UsersService, PrismaService, MailService, TokenService],
+    providers: [
+        AuthService,
+        UsersService,
+        PrismaService,
+        MailService,
+        TokenService,
+    ],
     exports: [AuthService, TokenService],
 })
 export class AuthModule {}

@@ -2,10 +2,10 @@ import { utils, WorkBook } from "xlsx";
 import { defaultSheetCellValue } from "../default-excel-values";
 import { NotFoundException } from "@nestjs/common";
 import { TableResult } from "../types";
-import { FilenameForTableCell10Kv } from "@/@types";
+import { PossibleFilenameTable } from "@/@types";
 
 export const cell10KvTableResult = (
-    fileName: FilenameForTableCell10Kv,
+    fileName: PossibleFilenameTable,
     wb: WorkBook,
     firstSheetName: string,
 ): TableResult => {
