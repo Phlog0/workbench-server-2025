@@ -74,7 +74,7 @@ export class AuthController {
     @SkipAuth()
     @Post("register")
     @HttpCode(HttpStatus.CREATED)
-    async registration(
+    async register(
         @Body() registerDto: RegisterDto,
         @Res({ passthrough: true }) response: Response,
     ) {
@@ -87,10 +87,10 @@ export class AuthController {
             // sameSite: "strict"
         });
         // TODO
-        return response.json({
+        return {
             user: userData.user,
             accessToken: userData.accessToken,
-        });
+        };
     }
 
     @Post("logout")
@@ -103,8 +103,7 @@ export class AuthController {
         if (typeof refreshToken === "string") {
             const token = await this.authService.logout(refreshToken);
             response.clearCookie("refreshToken");
-            // TODO Что это ваще?
-            return response.json(token);
+            return { token };
         } else {
             throw new UnauthorizedException("Нет кук");
         }
@@ -124,8 +123,7 @@ export class AuthController {
                 maxAge: 30 * 24 * 60 * 60 * 1000,
                 httpOnly: true,
             });
-            // TODO
-            return response.json(userData);
+            return { userData };
         }
         throw new UnauthorizedException("Пользователь не авторизован");
     }

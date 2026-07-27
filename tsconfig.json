@@ -21,13 +21,6 @@
         },
         "types": ["jest"]
     },
-
-    // "include": ["src/**/*"],
-    "exclude": ["node_modules", "dist"],
-
-    "ts-node": {
-        "compilerOptions": {
-            "module": "commonjs"
-        }
-    }
+    "include": ["src/**/*", "prisma/**/*", "prisma.config.ts"],
+    "exclude": ["node_modules", "dist"]
 }

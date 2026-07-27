@@ -4,9 +4,8 @@ import {
     NotFoundException,
 } from "@nestjs/common";
 import { PrismaService } from "@/prisma.service";
-// TODO allowSynthetic...
-import * as bcrypt from "bcryptjs";
-import { randomUUID } from "crypto";
+import bcrypt from "bcryptjs";
+import { v4 as uuidv4 } from "uuid";
 import { RegisterDto } from "../dto/register.dto";
 @Injectable()
 export class UsersService {
@@ -30,7 +29,7 @@ export class UsersService {
         }
         const salt = bcrypt.genSaltSync(10);
         const hashedPassword = bcrypt.hashSync(dto.password, salt);
-        const newLink = randomUUID();
+        const newLink = uuidv4();
         const createdUser = await this.prisma.user.create({
             data: {
                 email: dto.email,
