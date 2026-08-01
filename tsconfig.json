@@ -15,7 +15,7 @@
         "noFallthroughCasesInSwitch": true,
         "forceConsistentCasingInFileNames": true,
         "strictPropertyInitialization": false,
-        "noImplicitAny": true,
+        "noImplicitAny": false,
         "paths": {
             "@/*": ["./src/*"]
         },

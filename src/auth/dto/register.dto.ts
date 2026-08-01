@@ -9,20 +9,20 @@ import {
 
 export class RegisterDto {
     @ApiProperty({ type: String, example: "Сергей" })
-    @IsString()
+    @IsString({ message: "Имя должно быть строкой" })
     name: string;
 
     @ApiProperty({ type: String, example: "Сергеев" })
-    @IsString()
+    @IsString({ message: "Фамилия должна быть строкой" })
     lastName: string;
 
     @ApiProperty({ type: String, example: "Сергеев" })
     @IsOptional()
     @IsString()
-    secondName: string;
+    secondName?: string;
 
     @ApiProperty({ type: String, example: "password123" })
-    @IsString()
+    @IsString({ message: "Пароль должен быть строкой" })
     @MinLength(6, {
         message: "Пароль должен быть больше 6 символов",
     })

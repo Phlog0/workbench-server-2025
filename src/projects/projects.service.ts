@@ -3,22 +3,22 @@ import { CreateProjectDto } from "./dto/create-project.dto";
 import { PrismaService } from "../prisma.service";
 import { UpdateProjectDto } from "./dto/update-project.dto";
 import { SchemeDataDto } from "./dto/scheme.dto";
-import { MapPositionDto } from "./dto/map-position.dto";
+import { InputJsonValue } from "@prisma/client/runtime/client";
 
 @Injectable()
 export class ProjectsService {
     constructor(private readonly prismaService: PrismaService) {}
 
-    async createProject(createProjectDto: CreateProjectDto) {
+    async createProject(dto: CreateProjectDto) {
         const newProject = await this.prismaService.project.create({
             data: {
-                description: createProjectDto.description,
-                title: createProjectDto.title,
-                projectType: createProjectDto.projectType,
-                createdAt: createProjectDto.createdAt,
-                updatedAt: createProjectDto.updatedAt,
-                position: JSON.stringify(createProjectDto.position),
-                markerColor: createProjectDto.markerColor,
+                description: dto.description,
+                title: dto.title,
+                projectType: dto.projectType,
+                createdAt: dto.createdAt,
+                updatedAt: dto.updatedAt,
+                position: dto.position as unknown as InputJsonValue,
+                markerColor: dto.markerColor,
             },
         });
         return { newProject };
@@ -30,7 +30,7 @@ export class ProjectsService {
         });
         return projects.map((project) => ({
             ...project,
-            position: JSON.parse(project.position as string) as MapPositionDto,
+            position: project.position,
         }));
     }
 
@@ -101,11 +101,12 @@ export class ProjectsService {
         if (!findProject) {
             throw new NotFoundException("Проект не найден");
         }
+
         await this.prismaService.project.update({
             where: {
                 id,
             },
-            data: { projectScheme: JSON.stringify(dto) },
+            data: { projectScheme: dto as unknown as InputJsonValue },
         });
 
         return { message: `Данные проекта ${id} успешно обновлены` };
